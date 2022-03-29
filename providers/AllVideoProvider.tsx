@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { testVideoList } from "../lib/testData";
+import DragManagerProvider from "./DragManagerProvider";
 
 
 
@@ -16,7 +17,9 @@ const AllVideoProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <AllVideoContext.Provider value={allVideos}> 
-      {children}
+      <DragManagerProvider>
+        {children}
+      </DragManagerProvider>
     </AllVideoContext.Provider>
   )
 }

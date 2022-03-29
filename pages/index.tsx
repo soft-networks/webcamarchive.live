@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import AllVideos from "../components/AllVideos";
+import VideoEditor from "../components/VideoEditor";
 import VideoPreview from "../components/VideoPreview";
 import AllVideoProvider  from "../providers/AllVideoProvider";
 import MergedVideoProvider from "../providers/MergedVideoProvider";
@@ -17,8 +18,9 @@ const Home: NextPage = () => {
 
         <main className="padded">
           hello world
-          <VideoPreview />
           <AllVideos/>
+          <VideoEditor />
+          
           
         </main>
       </MergedVideoProvider>

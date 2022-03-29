@@ -37,32 +37,32 @@ body {
   position: relative;
 }
 
-.thumbnailImageContainer {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  z-index: 500;
+
+.videoEditor {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 540px;
 }
 
-.thumbnailImage {
+.videoTimeline {
+  height: 50px;
+  display: flex;
   width: 100%;
 }
-
-.previewPlayer {
-  width: 540px;
-  height: auto;
+.videoDropZone {
+  background: yellow;
+  margin: 0.15%;
 }
-
-.previewPlayer > div {
-  position: relative;
+.videoDropZone:hover {
+  background: paleturquoise;
 }
 
 .previewVideo {
-  position: absolute;
   width: 100%;
   display: block;
-  top: 0;
-  left:0 ;
 }
 
 .previewVideo.hide {
@@ -76,6 +76,7 @@ body {
   border-radius: 50%;
   z-index: 5000;
   margin-top: -5px;
+  position: absolute;
 }
 
 .noselect {
@@ -90,4 +91,15 @@ body {
 
 .noevents {
   pointer-events: none;
+}
+
+.react-draggable-dragging {
+  z-index: 5000;
+  background: pink;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.react-draggable-dragging img {
+  border: 1px solid red;
+  
 }
