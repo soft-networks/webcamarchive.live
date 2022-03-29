@@ -31,3 +31,63 @@ body {
 
 }
 
+.fullBleed {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.thumbnailImageContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  z-index: 500;
+}
+
+.thumbnailImage {
+  width: 100%;
+}
+
+.previewPlayer {
+  width: 540px;
+  height: auto;
+}
+
+.previewPlayer > div {
+  position: relative;
+}
+
+.previewVideo {
+  position: absolute;
+  width: 100%;
+  display: block;
+  top: 0;
+  left:0 ;
+}
+
+.previewVideo.hide {
+  display: none;
+}
+
+.sliderCursor {
+  width: 10px;
+  height: 10px;
+  background: hotpink;
+  border-radius: 50%;
+  z-index: 5000;
+  margin-top: -5px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.noevents {
+  pointer-events: none;
+}
