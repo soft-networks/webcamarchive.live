@@ -26,10 +26,14 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
     return allVideos[id];
   };
   const removeVideoFromDesktop = (id: string) => {
-    setDesktopVideoIDs((c) => c.filter((vid) => vid !== id));
+    if (id && desktopVideoIDs.includes(id)) {
+      setDesktopVideoIDs(desktopVideoIDs.filter((vid) => vid !== id));
+    }
   };
   const addVideoToDesktop = (id: string) => {
-    setDesktopVideoIDs((c) => [...c, id]);
+    if (!desktopVideoIDs.includes(id) && allVideos[id] !== undefined) {
+      setDesktopVideoIDs((c) => [...c, id]);
+    }
   };
 
   useEffect(() => {

@@ -1,80 +1,109 @@
-import React, { createContext, useEffect, useState } from "react";
-import { setMergedVideo, syncMergedVideos } from "../lib/firebase";
-import { testVideoList } from "../lib/testData";
-import { useAllVideos } from "./AllVideoProvider";
+import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { disableMergedVideosSyncDB, setMergedVideoDB, syncMergedVideosDB } from "../lib/firebase";
 
+import { useAllVideos } from "./AllVideoProvider";
 
 export const VIDEO_LENGTH = 1000;
 export const NUM_VIDEO = 30;
 export interface MergedVideoContextType {
-  videoList: (string|null)[],
-  setVideoAtIndex: (index: number, videoID: string) => void
+  mergedVideoList: (string | null)[];
+  mergeVideoAtIndex: (index: number, videoID: string) => void;
 }
 export const MergedVideoContext = createContext<MergedVideoContextType>({
-  videoList: [],
-  setVideoAtIndex: () => {},
+  mergedVideoList: [],
+  mergeVideoAtIndex: () => {},
 });
 
 const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
+  const [videoListState, setVideoListState] = useState<(string | null)[]>([]);
+  const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
+  const stateRef = useRef<(string|null)[]>();
 
-  const [videoList, setVideoList] = useState< (string | null)[]>([]);
-  const {removeVideoFromDesktop, addVideoToDesktop} = useAllVideos();
-
-  useEffect(()=> {
-    //Initialize to null
-    let vl = [];
-    for (let i =0; i < NUM_VIDEO; i++) {
-      vl.push(null);
-    }
-    setVideoList(vl);
-  }, []);
-
-  const videoSwappedIntoTimeline = (oldid: string | null, newid: string | null)  => {
-    if (oldid) {
-      addVideoToDesktop(oldid);
-    }
-    if (newid) {
-      removeVideoFromDesktop(newid);
-    }
-    
-  }
-
-  useEffect(() => {
-    //sync to server
-    syncMergedVideos((newMergedVideoList) => {
-      console.log("RECEIVED UPDATE", newMergedVideoList);
-      let indexes = Object.keys(newMergedVideoList);
-      
-      for (let i =0 ; i < indexes.length; i++) {
-        let index = parseInt(indexes[i]);
-        let newID = newMergedVideoList[index];
-        let oldID = videoList[index];
-        if (newID !== oldID) {
-          setVideoList((c) => {
-            let newList = [...c];
-            newList[index] = newID;
-            return newList;
-          });
-          videoSwappedIntoTimeline(oldID, newID);
-        }
+  const videoWasMerged = useCallback(
+    (oldid: string | null, newid: string | undefined) => {
+      if (oldid !== null) {
+        addVideoToDesktop(oldid);
       }
-    })
-  }, [videoList])
+      if (newid !== undefined) {
+        removeVideoFromDesktop(newid);
+      }
+    },
+    [addVideoToDesktop, removeVideoFromDesktop]
+  );
+  useEffect(() => {
+    console.log("*^^^^^^*^*^*^^*^ UPDATING THE REFERENCE TO SYNC WITH STATE");
+    stateRef.current = videoListState;
+  }, [videoListState])
+  const handleDBChange = (newMergedVideoList: { [key: string]: string }) => {
+    console.log(" ***** RECEIVED UPDATE ******");
 
+    let keys: string[] = Object.keys(newMergedVideoList);
+    let swaps = [];
+    let currentVideos = stateRef.current ? [...stateRef.current] : [];
+    console.log("Current list is", currentVideos);
 
-  const setVideoAtIndex = (index: number, videoID: string) => {
-    let oldvideo = videoList[index];
-    setVideoList( c => {
+    //TODO: This can be more efficient, probably O(n = NUM_VIDEO), right now its O(2n or so)
+    for (var i = 0; i < keys.length; i++) {
+      let index;
+      try {
+        index = parseInt(keys[i]);
+      } catch (e) {
+        continue;
+      }
+      let newID = newMergedVideoList[index];
+      let oldID = currentVideos[index];
+      if (oldID == null && newID == undefined) {
+        continue;
+      } else if (oldID == newID) {
+        continue;
+      } else {
+        console.log("UPDATING", oldID, newID, oldID == newID);
+        swaps.push({ index: index, old: oldID, new: newID }); //Two cases: oldID is NOT null, newID is undefined or they are different keys
+      }
+    }
+    for (let i = 0; i< currentVideos.length; i++) {
+      if (currentVideos[i] && ! keys.includes(i + '')) {
+        swaps.push({old: currentVideos[i], new: undefined, index: i});
+      }
+    }
+    if (swaps.length > 0) {
+      console.log(swaps);
+      for (let i = 0; i < swaps.length; i++) {
+        const swap = swaps[i];
+        videoWasMerged(swap.old, swap.new);
+
+        currentVideos[swap.index] = swap.new === undefined ? null : swap.new;
+      }
+      console.log("**** performing state update to", currentVideos);
+      setVideoListState(currentVideos);
+    }
+  };
+  const mergeVideoAtIndex = (index: number, videoID: string) => {
+    let oldvideo = videoListState[index];
+    setVideoListState((c) => {
       c[index] = videoID;
       console.log("Updated video list to", c);
       return [...c];
-    })
-    videoSwappedIntoTimeline(oldvideo, videoID);
-    setMergedVideo(index, videoID);
-  }
+    });
+    videoWasMerged(oldvideo, videoID);
+    setMergedVideoDB(index, videoID);
+  };
+
+  useEffect(() => {
+    //Initialize to null
+    let vl = [];
+    for (let i = 0; i < NUM_VIDEO; i++) {
+      vl.push(null);
+    }
+    setVideoListState(vl);
+    syncMergedVideosDB(handleDBChange);
+    return () => disableMergedVideosSyncDB();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <MergedVideoContext.Provider value={{ videoList: videoList, setVideoAtIndex }}>
+      <MergedVideoContext.Provider value={{ mergedVideoList: videoListState, mergeVideoAtIndex }}>
         {children}
       </MergedVideoContext.Provider>
     </>
@@ -84,7 +113,6 @@ const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
 export const useMergedVideo = () => {
   const videoList = React.useContext(MergedVideoContext);
   return videoList;
-}
+};
 
 export default MergedVideoProvider;
-

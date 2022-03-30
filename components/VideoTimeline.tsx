@@ -17,7 +17,6 @@ const VideoTimeline: React.FC<VideoTimelineProps> = ({ videoNumber, sliderPos })
     }
     return dropZones;
   };
-
   return (
     <div className="videoTimelineContainer"> 
       <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor"></div>
@@ -31,18 +30,17 @@ interface VideoDropZoneProps {
 }
 const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   const { amDraggingGlobal, videoBeingDragged, setVideoBeingDragged } = useDragManager();
-  const { setVideoAtIndex, videoList } = useMergedVideo();
-  const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
+  const { mergeVideoAtIndex, mergedVideoList } = useMergedVideo();
 
   const dropped = () => {
     if (amDraggingGlobal && videoBeingDragged !== null) {
-      setVideoAtIndex(dropZoneNumber, videoBeingDragged);
+      mergeVideoAtIndex(dropZoneNumber, videoBeingDragged);
       setVideoBeingDragged(null);
     }
   };
   return (
     <div style={{ width: 1000 / NUM_VIDEO + "%", height: "100%" }} onMouseUp={() => dropped()}>
-      <VideoEditorThumbnail videoID={videoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />
+      <VideoEditorThumbnail videoID={mergedVideoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />
     </div>
   );
 };

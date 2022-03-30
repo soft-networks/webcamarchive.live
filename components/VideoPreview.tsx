@@ -9,7 +9,7 @@ interface VideoPreviewProps {
   videoNumber: number;
 }
 const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
-  const { videoList } = useMergedVideo();
+  const { mergedVideoList: videoList } = useMergedVideo();
   const { getVideoById } = useAllVideos();
   return (
     <div>
@@ -31,7 +31,9 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
   const [muteVids, setMuteVids] = useState<boolean>(true);
 
   useEffect(() => {
-    document.addEventListener("click", () => setMuteVids(false));
+    const unmuteme = () => setMuteVids(false);
+    let listener = document.addEventListener("click", unmuteme );
+    return () => document.removeEventListener("click", unmuteme);
   });
   useEffect(() => {
     if (videoPlayerRef.current) {

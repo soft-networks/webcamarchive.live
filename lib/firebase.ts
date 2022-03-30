@@ -16,11 +16,11 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // Constants
-const DB_ROOT = "MOLLYEDITOR";
+const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
 
 
-export const syncMergedVideos = (setMergedVideos: (videoIDs: string[]) => void) => {
+export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
   onValue(mergedVideoRef, (snapshot) => {
     let val = snapshot.val();
     console.log("Received snapshot")
@@ -30,11 +30,11 @@ export const syncMergedVideos = (setMergedVideos: (videoIDs: string[]) => void) 
   })
 }
 
-export const disableMergedVideosSync = () => {
+export const disableMergedVideosSyncDB = () => {
   off(mergedVideoRef);
 }
 
-export const setMergedVideo = (position: number, id: string) => {
+export const setMergedVideoDB = (position: number, id: string) => {
   const specificVideoRef = ref(db, `${DB_ROOT}/mergedVideos/${position}`);
   set(specificVideoRef, id);
 }
