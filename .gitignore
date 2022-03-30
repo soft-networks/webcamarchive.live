@@ -39,4 +39,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # files
-# public/assets
+public/assets

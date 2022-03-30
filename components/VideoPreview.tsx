@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
 import { useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
 import { useAllVideos } from "../providers/AllVideoProvider";
+import { TEST_STATIC_URL } from "../lib/testData";
 
 
 const VS = [1080, 720];
@@ -44,7 +45,7 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
     }
   }, [playing]);
   return (
-    <video muted={muteVids || (video === null)} src={video ? video.videoSrc : "/assets/static.mp4"} ref={videoPlayerRef} className={classnames({ hide: !playing, previewVideo: true })} />
+    <video muted={muteVids || (video === null)} src={video ? video.videoSrc : TEST_STATIC_URL} ref={videoPlayerRef} className={classnames({ hide: !playing, previewVideo: true })} />
   );
 };
 

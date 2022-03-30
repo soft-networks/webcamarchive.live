@@ -1,5 +1,4 @@
 export function testVideoList() {
-
   let vidnames = [
     "Movie on 1-22-16 at 9.01 PM",
     "Movie on 1-22-17 at 11.39 AM",
@@ -29,18 +28,21 @@ export function testVideoList() {
     "Movie on 5-29-15 at 9.02 PM",
     "Movie on 7-7-15 at 11.04 PM",
     "Movie on 7-9-15 at 1.11 AM",
-    "Movie on 9-3-15 at 8.40 PM"
+    "Movie on 9-3-15 at 8.40 PM",
   ];
 
-  const root = "/assets/testvids/";
+  const root = "https://storage.googleapis.com/molly-archive/testvids/";
 
-  let videos: VideoList = vidnames.map((v) => ( {
-    id: v,
-    imageSrc: `${root}${v}.png`,
-    videoSrc: `${root}${v}.mp4`,
-  }))
+  let videos: VideoList = vidnames.map((v) => {
+    const encoded = encodeURIComponent(v);
+    return {
+      id: v,
+      imageSrc: `${root}${encoded}.png`,
+      videoSrc: `${root}${encoded}.mp4`,
+    };
+  });
 
   return videos;
-  
 }
 
+export const TEST_STATIC_URL = "https://storage.cloud.google.com/molly-archive/static.mp4";
