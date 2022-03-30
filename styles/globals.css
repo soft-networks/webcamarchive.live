@@ -27,7 +27,7 @@ a {
 }
 
 body {
-  background:  #eee;
+  background:  white;;
 
 }
 
@@ -37,27 +37,95 @@ body {
   position: relative;
 }
 
+.hideOverflow {
+  overflow: hidden;
+}
+.caption {
+  font-size: var(--s-1);
+}
 
 .videoEditor {
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 0;
-  left: 0;
-  width: 540px;
+  top: 30%;
+  left: 30%;
+  width: 50%;
+  max-width: 800px;
+  background: #eee;
+  border: 1px solid rgb(178, 247, 155);;
 }
 
+.videoEditor .handle {
+  height: 20px;
+  background: rgb(178, 247, 155);
+}
+.videoTimelineContainer {
+  height: 92px;
+  position: relative;
+}
 .videoTimeline {
-  height: 50px;
+  height: 100px;
   display: flex;
   width: 100%;
+  padding: var(--s0) 0px;
+  background: rgb(67, 67, 67);
+  height: 100%;
+  
 }
+
+.timelineCursor {
+  width: 3px;
+  height: 100%;
+  background: hotpink;
+  z-index: 5000;
+  position: absolute;
+}
+
+.desktopFile {
+  width: 5%;
+  max-width: 100px;
+}
+.desktopFile img {
+  width: 100%;
+  box-shadow: 0px 0px 5px black;
+  border: 1px solid black;
+}
+
+.desktopFile .caption {
+  max-width: 23ch;
+  word-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
+  text-shadow: 0px 0px 5px gray;
+}
+
 .videoDropZone {
-  background: yellow;
-  margin: 0.15%;
+  background: gray;
+  border-left: 1px solid rgb(67, 67, 67);
+  border-right: 2px solid rgb(67, 67, 67);
 }
-.videoDropZone:hover {
+.videoDropZone .caption {
+  color: white;
+  padding: var(--s-3);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  left: 1px;
+  z-index: 1;
+}
+.videoDropZone .poster {
+  height: 100%;
+  position:absolute;
+  z-index: 0;
+  left: -60%;
+}
+.videoDropZone:hover, .videoDropZone.hasVideo:hover {
   background: paleturquoise;
+}
+.videoDropZone.hasVideo {
+  background: lightseagreen;
 }
 
 .previewVideo {
@@ -67,16 +135,6 @@ body {
 
 .previewVideo.hide {
   display: none;
-}
-
-.sliderCursor {
-  width: 10px;
-  height: 10px;
-  background: hotpink;
-  border-radius: 50%;
-  z-index: 5000;
-  margin-top: -5px;
-  position: absolute;
 }
 
 .noselect {
@@ -93,13 +151,23 @@ body {
   pointer-events: none;
 }
 
+
 .react-draggable-dragging {
   z-index: 5000;
-  background: pink;
+}
+.videoEditor.react-draggable .handle {
+  cursor: move;
+}
+.desktopFile.react-draggable  {
+  cursor: grab;
+}
+.desktopFile.react-draggable-dragging {
   pointer-events: none;
   opacity: 0.5;
+  cursor: grabbing;
 }
-.react-draggable-dragging img {
+
+.desktopFile.react-draggable-dragging img {
   border: 1px solid red;
   
 }

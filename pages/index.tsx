@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import AllVideos from "../components/AllVideos";
+import Desktop from "../components/Desktop";
 import VideoEditor from "../components/VideoEditor";
 import VideoPreview from "../components/VideoPreview";
 import AllVideoProvider  from "../providers/AllVideoProvider";
@@ -17,11 +17,9 @@ const Home: NextPage = () => {
         </Head>
 
         <main className="padded">
-          hello world
-          <AllVideos/>
+          <div> hello. u have to click somewhere for sound to play. u can also move everything around </div>
+          <Desktop/>
           <VideoEditor />
-          
-          
         </main>
       </MergedVideoProvider>
       </AllVideoProvider>

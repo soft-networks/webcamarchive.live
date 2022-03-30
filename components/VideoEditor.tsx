@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
+import { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
 import VideoPreview from "./VideoPreview";
 import VideoTimeline from "./VideoTimeline";
+import Draggable from "react-draggable";
 
 const VideoEditor : React.FC = () => {
 
@@ -10,27 +11,29 @@ const VideoEditor : React.FC = () => {
 
   const startDate = useRef<number>(Date.now());
 
-  const {numVideo} = useMergedVideo();
   
   useEffect(() => {
     const animateSlider = setInterval(() => {
       const now = Date.now();
       const elapsedTime = now - startDate.current;
       const elapsedVideos = Math.floor(elapsedTime / VIDEO_LENGTH);
-      const videoNum = elapsedVideos % numVideo;
-      const totalVideoLength = numVideo * VIDEO_LENGTH;
+      const videoNum = elapsedVideos % NUM_VIDEO;
+      const totalVideoLength = NUM_VIDEO * VIDEO_LENGTH;
       const sliderPos = (elapsedTime %  totalVideoLength) / totalVideoLength;
       setVideoNumber(videoNum);
       setSliderPos(sliderPos);
     }, 100);
     return () => clearInterval(animateSlider);
-  }, [numVideo]);
+  }, []);
 
   return (
-    <div className="videoEditor">
-      <VideoPreview videoNumber={videoNumber} />
-      <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
-    </div>
+    <Draggable handle=".handle">
+      <div className="videoEditor">
+        <div className="handle"> ••• </div>
+        <VideoPreview videoNumber={videoNumber} />
+        <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
+      </div>
+    </Draggable>
   );
 };
 

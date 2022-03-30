@@ -1,30 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
 import { useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
+import { useAllVideos } from "../providers/AllVideoProvider";
 
+
+const VS = [1080, 720];
 interface VideoPreviewProps {
   videoNumber: number;
 }
 const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
   const { videoList } = useMergedVideo();
-
+  const {getVideoById} = useAllVideos();
   return (
     <div>
       {videoList.map((video, index) => (
-        <VideoPreviewPlayer key={index} videoSrc={video.videoSrc} playing={index === videoNumber} />
-      ))}
+          <VideoPreviewPlayer key={index} video={ video ? getVideoById(video) : null} playing={index === videoNumber} /> ))}
     </div>
   );
 };
 
 interface VideoPreviewPlayerProps {
   playing: boolean;
-  videoSrc: string;
+  video: Video | null;
 }
 
-const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, videoSrc }) => {
+const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
-
+  const [muteVids, setMuteVids] = useState<boolean>(true);
+  useEffect(() => {
+    document.addEventListener("click", () => setMuteVids(false));
+  })
   useEffect(() => {
     if (videoPlayerRef.current) {
       if (playing) {
@@ -39,7 +44,7 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
     }
   }, [playing]);
   return (
-    <video muted src={videoSrc} ref={videoPlayerRef} className={classnames({ hide: !playing, previewVideo: true })} />
+    <video muted={muteVids || (video === null)} src={video ? video.videoSrc : "/assets/static.mp4"} ref={videoPlayerRef} className={classnames({ hide: !playing, previewVideo: true })} />
   );
 };
 

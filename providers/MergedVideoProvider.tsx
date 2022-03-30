@@ -3,41 +3,40 @@ import { testVideoList } from "../lib/testData";
 
 
 export const VIDEO_LENGTH = 1000;
-
+export const NUM_VIDEO = 30;
 export interface MergedVideoContextType {
-  videoList: VideoList,
-  setVideoAtIndex: (index: number, video: Video) => void,
-  numVideo: number
+  videoList: (string|null)[],
+  setVideoAtIndex: (index: number, videoID: string) => void
 }
 export const MergedVideoContext = createContext<MergedVideoContextType>({
   videoList: [],
   setVideoAtIndex: () => {},
-  numVideo: 0,
 });
 
 const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
 
-  const [videoList, setVideoList] = useState<VideoList>([]);
-  const [numVideo, setNumVideo] = useState<number>(0);
+  const [videoList, setVideoList] = useState< (string | null)[]>([]);
+
 
   useEffect(()=> {
-    setVideoList( testVideoList());
+    let vl = [];
+    for (let i =0; i < NUM_VIDEO; i++) {
+      vl.push(null);
+    }
+    setVideoList(vl);
   }, [])
 
-  useEffect(() => {
-    setNumVideo(videoList.length);
-  }, [videoList])
 
-  const setVideoAtIndex = (index: number, video: Video) => {
+  const setVideoAtIndex = (index: number, videoID: string) => {
     setVideoList( c => {
-      c[index] = video;
+      c[index] = videoID;
       console.log("Updated video list to", c);
       return [...c];
     })
   }
   return (
     <>
-      <MergedVideoContext.Provider value={{ videoList: videoList, setVideoAtIndex, numVideo }}>
+      <MergedVideoContext.Provider value={{ videoList: videoList, setVideoAtIndex }}>
         {children}
       </MergedVideoContext.Provider>
     </>
