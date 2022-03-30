@@ -8,7 +8,7 @@ const VideoEditor : React.FC = () => {
 
   const [videoNumber, setVideoNumber] = useState(0);
   const [sliderPos, setSliderPos] = useState(0);
-
+  const myRef = useRef<HTMLDivElement>(null);
   const startDate = useRef<number>(Date.now());
 
   
@@ -27,8 +27,8 @@ const VideoEditor : React.FC = () => {
   }, []);
 
   return (
-    <Draggable handle=".handle">
-      <div className="videoEditor">
+    <Draggable handle=".handle" nodeRef={myRef}>
+      <div className="videoEditor" ref={myRef}>
         <div className="handle"> ••• </div>
         <VideoPreview videoNumber={videoNumber} />
         <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>

@@ -35,7 +35,6 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
 
   const dropped = () => {
-    console.log("Eyy");
     if (amDraggingGlobal && videoBeingDragged !== null) {
       let oldVideo = videoList[dropZoneNumber];
       setVideoAtIndex(dropZoneNumber, videoBeingDragged);
