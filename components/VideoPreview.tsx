@@ -13,9 +13,9 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
   const { getVideoById } = useAllVideos();
   return (
     <div>
-      <StaticVideoPlayer playing={videoList[videoNumber] == null} />
+      <StaticVideoPlayer playing={videoList[videoNumber] == undefined} />
       {videoList.map((video, index) =>
-        video ? <VideoPreviewPlayer key={index} video={getVideoById(video)} playing={index === videoNumber} /> : null
+        video ? <VideoPreviewPlayer key={index} video={getVideoById(video)} playing={index === videoNumber} /> : ""
       )}
     </div>
   );
@@ -50,7 +50,7 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
   }, [playing]);
   return (
     <video
-      muted={muteVids || video === null}
+      muted={muteVids || video === undefined}
       src={video ? video.videoSrc : TEST_STATIC_URL}
       ref={videoPlayerRef}
       className={classnames({ hide: !playing, previewVideo: true })}

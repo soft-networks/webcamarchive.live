@@ -4,23 +4,23 @@ import { createContext, useContext, useState } from "react";
 
 export interface DragManagerProviderProps {
   amDraggingGlobal: boolean;
-  videoBeingDragged: string | null;
-  setVideoBeingDragged: (videoBeingDragged: string | null) => void;
+  videoBeingDragged: string | undefined;
+  setVideoBeingDragged: (videoBeingDragged: string | undefined) => void;
 }
 
 export const DragManagerContext = createContext<DragManagerProviderProps>({
   amDraggingGlobal: false,
-  videoBeingDragged: null,
+  videoBeingDragged: undefined,
   setVideoBeingDragged: () => {},
 });
 
 const DragManagerProvider = ({ children }: { children: React.ReactNode }) => {
   const [amDragging, setAmDragging] = useState(false);
-  const [videoBeingDragged, setVideoBeingDragged] = useState<string | null>(null);
+  const [videoBeingDragged, setVideoBeingDragged] = useState<string | undefined>(undefined);
   
-  const videoDragged = (videoBeingDragged: string | null) => {
+  const videoDragged = (videoBeingDragged: string | undefined) => {
     setVideoBeingDragged(videoBeingDragged);
-    if (videoBeingDragged !== null) {
+    if (videoBeingDragged !== undefined) {
       setAmDragging(true);
     } else {
       setAmDragging(false);

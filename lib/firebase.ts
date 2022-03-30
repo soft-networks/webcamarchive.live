@@ -23,10 +23,7 @@ const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
 export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
   onValue(mergedVideoRef, (snapshot) => {
     let val = snapshot.val();
-    console.log("Received snapshot")
-    if (val) { 
-      setMergedVideos(val);
-    } 
+    setMergedVideos(val || {});
   })
 }
 

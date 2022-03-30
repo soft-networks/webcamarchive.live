@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { testVideoList } from "../lib/testData";
 import DragManagerProvider from "./DragManagerProvider";
 
@@ -18,21 +18,28 @@ export const AllVideoContext = createContext<AllVideoContextType>({
 });
 
 const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
-  const [allVideos, setAllVideos] = useState<{ [key: string]: Video }>({});
+  
+  const allVideos = useRef<{ [key: string]: Video }>({});
 
   const [desktopVideoIDs, setDesktopVideoIDs] = useState<string[]>([]);
+  
 
   const getVideoById = (id: string): Video => {
-    return allVideos[id];
+    return allVideos.current?.[id];
   };
+
   const removeVideoFromDesktop = (id: string) => {
-    if (id && desktopVideoIDs.includes(id)) {
-      setDesktopVideoIDs(desktopVideoIDs.filter((vid) => vid !== id));
-    }
-  };
+    console.log("removing", id);
+    if (id) {
+      setDesktopVideoIDs((c) => c.filter((v) => v !== id));
+    } 
+  }
   const addVideoToDesktop = (id: string) => {
-    if (!desktopVideoIDs.includes(id) && allVideos[id] !== undefined) {
-      setDesktopVideoIDs((c) => [...c, id]);
+    console.log("adding", id);
+    if (allVideos.current?.[id] !== undefined) {
+      setDesktopVideoIDs((c) => c.indexOf(id) == -1 ? [...c, id] : c);
+    } else {
+      console.log("video not found", id);
     }
   };
 
@@ -45,14 +52,12 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
     for (let i = 0; i < videoList.length; i++) {
       let vid = videoList[i];
       allv[vid.id] = vid;
-
-      //TODO: IF this video is NOT in the editor, add it to desktop
-      //NOTE THAT if i've removed it locally, it may already be in the editor though ill figure it out later
       dv.push(vid.id);
     }
-    setAllVideos(allv);
+    allVideos.current = allv;
     setDesktopVideoIDs(dv);
-  }, [setAllVideos, setDesktopVideoIDs]);
+    console.log("!!!!!!!!" ,dv);
+  }, [setDesktopVideoIDs]);
 
   return (
     <AllVideoContext.Provider value={{ desktopVideoIDs, removeVideoFromDesktop, addVideoToDesktop, getVideoById }}>

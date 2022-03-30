@@ -33,9 +33,9 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   const { mergeVideoAtIndex, mergedVideoList } = useMergedVideo();
 
   const dropped = () => {
-    if (amDraggingGlobal && videoBeingDragged !== null) {
+    if (amDraggingGlobal && videoBeingDragged) {
       mergeVideoAtIndex(dropZoneNumber, videoBeingDragged);
-      setVideoBeingDragged(null);
+      setVideoBeingDragged(undefined);
     }
   };
   return (
@@ -46,21 +46,21 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
 };
 
 interface VideoEditorThumbnailProps {
-  videoID: string | null;
+  videoID: string | undefined;
   dropZonenumber: number;
 }
 
 const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dropZonenumber }) => {
   const { getVideoById } = useAllVideos();
-  const video = videoID ? getVideoById(videoID) : null;
+  const video = videoID ? getVideoById(videoID) : undefined;
 
   return (
     <div
-      className={classnames({ videoDropZone: true, hasVideo: video !== null })}
+      className={classnames({ videoDropZone: true, hasVideo: video !== undefined })}
       style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden"}}
     >
       <div className="caption videoNumber"> {dropZonenumber + 1}</div>
-      {video !== null ? <img className="poster" src={video.imageSrc} alt={`Thumbnail for ${video.id}`} /> : null}
+      {video !== undefined ? <img className="poster" src={video.imageSrc} alt={`Thumbnail for ${video.id}`} /> : ""}
     </div>
   );
 };
