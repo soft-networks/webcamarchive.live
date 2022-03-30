@@ -1,11 +1,14 @@
 import type { NextPage } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import Image from "next/image";
+
 import Desktop from "../components/Desktop";
-import VideoEditor from "../components/VideoEditor";
-import VideoPreview from "../components/VideoPreview";
+
 import AllVideoProvider  from "../providers/AllVideoProvider";
 import MergedVideoProvider from "../providers/MergedVideoProvider";
+
+const VideoEditorDynamic = dynamic(() => import('../components/VideoEditor'), {ssr: false})
+
 
 const Home: NextPage = () => {
   return (
@@ -19,7 +22,7 @@ const Home: NextPage = () => {
         <main className="padded">
           <div> hello. u have to click somewhere for sound to play. u can also move everything around </div>
           <Desktop/>
-          <VideoEditor />
+          <VideoEditorDynamic />
         </main>
       </MergedVideoProvider>
       </AllVideoProvider>
