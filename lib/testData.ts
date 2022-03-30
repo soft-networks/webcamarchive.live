@@ -45,4 +45,4 @@ export function testVideoList() {
   return videos;
 }
 
-export const TEST_STATIC_URL = "https://storage.cloud.google.com/molly-archive/static-2.mp4";
+export const TEST_STATIC_URL = "https://storage.googleapis.com/molly-archive/testvids/static.mp4";
