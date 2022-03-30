@@ -13,9 +13,10 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
   const { getVideoById } = useAllVideos();
   return (
     <div>
-      {videoList.map((video, index) => (
-        <VideoPreviewPlayer key={index} video={video ? getVideoById(video) : null} playing={index === videoNumber} />
-      ))}
+      <StaticVideoPlayer playing={videoList[videoNumber] == null} />
+      {videoList.map((video, index) =>
+        video ? <VideoPreviewPlayer key={index} video={getVideoById(video)} playing={index === videoNumber} /> : null
+      )}
     </div>
   );
 };
@@ -28,7 +29,6 @@ interface VideoPreviewPlayerProps {
 const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
   const [muteVids, setMuteVids] = useState<boolean>(true);
-  const [playerPlayedOnce, setPlayerPlayedOnce] = useState<boolean>(false);
 
   useEffect(() => {
     document.addEventListener("click", () => setMuteVids(false));
@@ -37,15 +37,15 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
     if (videoPlayerRef.current) {
       if (playing) {
         try {
-          videoPlayerRef.current.play().then(() => setPlayerPlayedOnce(true));
+          videoPlayerRef.current.play();
         } catch (e) {
           console.error("you need to click somewhere first");
         }
       } else {
-        if (playerPlayedOnce) videoPlayerRef.current.pause();
+        videoPlayerRef.current.pause();
       }
     }
-  }, [playing, playerPlayedOnce]);
+  }, [playing]);
   return (
     <video
       muted={muteVids || video === null}
@@ -53,6 +53,22 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
       ref={videoPlayerRef}
       className={classnames({ hide: !playing, previewVideo: true })}
       preload={"auto"}
+    />
+  );
+};
+
+interface StaticVideoPlayerProps {
+  playing: boolean;
+}
+const StaticVideoPlayer: React.FC<StaticVideoPlayerProps> = ({ playing }) => {
+  return (
+    <video
+      muted
+      autoPlay
+      src={TEST_STATIC_URL}
+      className={classnames({ hide: !playing, previewVideo: true })}
+      preload={"auto"}
+      loop
     />
   );
 };
