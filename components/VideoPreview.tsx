@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { useMergedVideo } from "../providers/MergedVideoProvider";
 import { useAllVideos } from "../providers/AllVideoProvider";
 import { TEST_STATIC_URL } from "../lib/vidData";
+import { useMuteVideoGate } from "../providers/MuteVideoGate";
 
 interface VideoPreviewProps {
   videoNumber: number;
@@ -27,13 +28,8 @@ interface VideoPreviewPlayerProps {
 
 const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
-  const [muteVids, setMuteVids] = useState<boolean>(true);
+  const {muteVideo} = useMuteVideoGate();
 
-  useEffect(() => {
-    const unmuteme = () => setMuteVids(false);
-    document.addEventListener("click", unmuteme );
-    return () => document.removeEventListener("click", unmuteme);
-  });
   useEffect(() => {
     if (videoPlayerRef.current) {
       if (playing) {
@@ -49,11 +45,12 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
   }, [playing]);
   return (
     <video
-      muted={muteVids || video === undefined}
+      muted={muteVideo || video === undefined}
       src={video ? video.videoSrc : TEST_STATIC_URL}
       ref={videoPlayerRef}
       className={classnames({ hide: !playing, previewVideo: true })}
       preload={"auto"}
+      poster={video ? video.imageSrc : ""}
     />
   );
 };
