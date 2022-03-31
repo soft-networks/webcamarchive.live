@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
-import { useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
+import { useMergedVideo } from "../providers/MergedVideoProvider";
 import { useAllVideos } from "../providers/AllVideoProvider";
-import { TEST_STATIC_URL } from "../lib/testData";
+import { TEST_STATIC_URL } from "../lib/vidData";
 
-const VS = [1080, 720];
 interface VideoPreviewProps {
   videoNumber: number;
 }
@@ -32,7 +31,7 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
 
   useEffect(() => {
     const unmuteme = () => setMuteVids(false);
-    let listener = document.addEventListener("click", unmuteme );
+    document.addEventListener("click", unmuteme );
     return () => document.removeEventListener("click", unmuteme);
   });
   useEffect(() => {

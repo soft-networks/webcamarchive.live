@@ -18,11 +18,7 @@ const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
   const [videoListState, setVideoListState] = useState<(string | undefined)[]>([]);
   const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
   const stateRef = useRef<(string|undefined)[]>();
-
-
-
   useEffect(() => {
-    console.log("state changed", videoListState)
     stateRef.current = videoListState;
   }, [videoListState])
   const handleDBChange = (newMergedVideoList: { [key: string]: string }) => {
@@ -41,16 +37,8 @@ const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
     setVideoListState(currentVideos);
   };
   const mergeVideoAtIndex = (index: number, videoID: string) => {
-    // let oldvideo = videoListState[index];
-    // setVideoListState((c) => {
-    //   c[index] = videoID;
-    //   console.log("Updated video list to", c);
-    //   return [...c];
-    // });
-    // videoWasMerged(oldvideo, videoID);
     setMergedVideoDB(index, videoID);
   };
-
   useEffect(() => {
     //Initialize to null
     let vl = [];

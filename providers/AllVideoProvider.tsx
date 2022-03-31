@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
-import { testVideoList } from "../lib/testData";
+import { getAllVideoList } from "../lib/vidData";
 import DragManagerProvider from "./DragManagerProvider";
 
 interface AllVideoContextType {
@@ -17,17 +17,17 @@ export const AllVideoContext = createContext<AllVideoContextType>({
   addVideoToDesktop: () => {},
 });
 
+
 const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
   
   const allVideos = useRef<{ [key: string]: Video }>({});
 
   const [desktopVideoIDs, setDesktopVideoIDs] = useState<string[]>([]);
   
-
+  //TODO optimization: use callbacks here
   const getVideoById = (id: string): Video => {
     return allVideos.current?.[id];
   };
-
   const removeVideoFromDesktop = (id: string) => {
     console.log("removing", id);
     if (id) {
@@ -42,9 +42,8 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("video not found", id);
     }
   };
-
   useEffect(() => {
-    let videoList = testVideoList(); //TODO: get from server
+    let videoList = getAllVideoList(); //TODO: get from server
 
     let allv: { [key: string]: Video } = {};
     let dv: string[] = [];
@@ -58,7 +57,6 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
     setDesktopVideoIDs(dv);
     console.log("!!!!!!!!" ,dv);
   }, [setDesktopVideoIDs]);
-
   return (
     <AllVideoContext.Provider value={{ desktopVideoIDs, removeVideoFromDesktop, addVideoToDesktop, getVideoById }}>
       <DragManagerProvider>{children}</DragManagerProvider>

@@ -16,11 +16,10 @@ const Home: NextPage = () => {
       <AllVideoProvider>
       <MergedVideoProvider>
         <Head>
-          <title>spawn trees</title>
+          <title>molly archive editor </title>
         </Head>
 
         <main className="padded">
-          <div> hello. u have to click somewhere for sound to play. u can also move everything around </div>
           <Desktop/>
           <VideoEditorDynamic />
         </main>
