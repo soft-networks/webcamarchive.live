@@ -36,7 +36,7 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
       >
         <div style={{ position: "relative" }} className={classNames({ noselect: true, noevents: true })}>
           {isHovering ? <video src={video.videoSrc} muted={muteVideo} autoPlay loop poster={video.imageSrc}/> : ""}
-          <img src={video.imageSrc} alt={`Thumbnail for ${video.id}`} key={`img-${video.id}`} onLoad={() => {console.log("hey"); desktopImageLoaded(); }}/>
+          <img src={video.imageSrc} alt={`Thumbnail for ${video.id}`} key={`img-${video.id}`} onLoad={() => { desktopImageLoaded(); }}/>
           <div>
             <div className="caption">{video.id}.mp4</div>
           </div>

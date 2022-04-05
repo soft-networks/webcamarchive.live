@@ -24,6 +24,7 @@
   --yellow: yellow;
   --black: black;
   --pink: hotpink;
+  --lightGray: #eee;
   --gray: gray;
   --darkGray: #333;
 }
@@ -50,7 +51,7 @@ body {
   left: 0;
   background: rgba(255,255,255,0.9);
   backdrop-filter: blur(2px);
-  z-index: 900000;
+  z-index: 999999;
 }
 .loading-overlay div {
   white-space: pre;
@@ -77,6 +78,54 @@ body {
   box-shadow: 0px 0px 30px var(--editorColor);
 }
 
+.chat {
+  background: white;
+  position: absolute;
+  display: flex;
+  flex-direction:  column;
+  left: 10%;
+  right: 10%;
+  width: calc(13% + 2 * var(--s-1));
+  min-width: calc(15ch + 2 * var(--s-1));
+  z-index: 99999;
+  border: 1px solid var(--black);
+  box-shadow: 0px 0px 12px var(--green);
+}
+.chat .message {
+  padding: var(--s-1);
+  box-sizing: border-box;
+}
+.chat .chat-messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-bottom: var(--s-3);
+}
+.chat-messages .message {
+  align-self: flex-end;
+  border-radius: var(--s0);
+  text-align: right;
+  color: white;
+  background: var(--pink);
+  margin-top: var(--s-3);
+  margin-right: var(--s-3);
+}
+
+.chat-input{
+  background: var(--lightGray);
+  margin-bottom: var(--s-2);
+  border-bottom: 1px solid var(--darkGray);
+}
+.chat-input input{
+  padding: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.chat-input .button {
+  display: inline-block;
+}
+
+
 .previewVideo {
   width: 100%;
   display: block;
@@ -91,7 +140,7 @@ body {
   width: 100%;
 }
 
-.videoEditor .handle {
+.videoEditor .handle , .chat .handle{
   height: 20px;
   background: var(--green);
   border-bottom: 1px solid var(--black);
@@ -100,7 +149,7 @@ body {
   position: absolute;
   top: 3px;
   right: var(--s-3);
-  z-index: 99999;
+  z-index: 999;
 }
 .videoTimelineContainer {
   height: 92px;
@@ -123,7 +172,7 @@ body {
   border-radius: 50%;
   background: var(--pink);
   box-shadow: 0px 0px 12px var(--pink);
-  z-index: 5000;
+  z-index: 999;
   position: absolute;
   transform: translate(-50%, -50%);
 }
@@ -140,7 +189,7 @@ body {
 }
 .mute {
   position: fixed;
-  z-index: 9000;
+  z-index: 99998;
   top: var(--s-1);
   right: var(--s-1); 
 }
@@ -217,9 +266,9 @@ body {
 
 
 .react-draggable-dragging {
-  z-index: 5000;
+  z-index: 9999;
 }
-.videoEditor.react-draggable .handle {
+.handle {
   cursor: move;
 }
 .desktopFile.react-draggable  {

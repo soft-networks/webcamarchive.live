@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 
 import Desktop from "../components/Desktop";
-
+import Chat from "../components/Chat";
 import AllVideoProvider from "../providers/AllVideoProvider";
 import LoadingGate from "../providers/LoadingGate";
 import MergedVideoProvider from "../providers/MergedVideoProvider";
@@ -22,7 +22,9 @@ const Home: NextPage = () => {
                 <title>molly archive editor </title>
               </Head>
               <main className="padded">
+              <Chat/>
                 <Desktop />
+                
                 <VideoEditorDynamic />
               </main>
             </MergedVideoProvider>

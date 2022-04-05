@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, off, set } from "firebase/database";
+import { getDatabase, ref, onValue, off, set, push, onChildAdded , once, get} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDEELIQs6LfHdFCnqUUNluk7tXKodeHIwE",
@@ -18,6 +18,8 @@ const db = getDatabase(app);
 // Constants
 const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
+const messageListRef = ref(db, `${DB_ROOT}/messageList`);
+let firstMessageRead = false
 
 
 export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
@@ -34,4 +36,30 @@ export const disableMergedVideosSyncDB = () => {
 export const setMergedVideoDB = (position: number, id: string) => {
   const specificVideoRef = ref(db, `${DB_ROOT}/mergedVideos/${position}`);
   set(specificVideoRef, id);
+}
+
+export const addMessageToDB = (message: Message) => {
+  const newMessageRef = push(messageListRef);
+  set(newMessageRef, message);
+}
+
+get(messageListRef).then(( ) => {
+  firstMessageRead = true;
+})
+
+export const messageAddedToDB = (callback: (message: Message) => void) => {
+
+  
+
+  onChildAdded(messageListRef, (data) => {
+    if (!firstMessageRead) return;
+    let val = data.val();
+    if (val && val.username && val.text) {
+      callback({username: val.username, text: val.text});
+    }
+  });
+}
+
+export const disableMessageAddedToDB = () => {
+  off(messageListRef);
 }

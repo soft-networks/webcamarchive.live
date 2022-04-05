@@ -35,8 +35,7 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (desktopVideoIDs.length > 0) {
-      console.log("Loaded " + numLoaded / desktopVideoIDs.length + "%");
-      setLoadingPercent(numLoaded / desktopVideoIDs.length);
+        setLoadingPercent(numLoaded / desktopVideoIDs.length);
     }
   }, [numLoaded, desktopVideoIDs, setLoadingPercent]);
   
