@@ -5,6 +5,7 @@ import Head from "next/head";
 import Desktop from "../components/Desktop";
 
 import AllVideoProvider from "../providers/AllVideoProvider";
+import LoadingGate from "../providers/LoadingGate";
 import MergedVideoProvider from "../providers/MergedVideoProvider";
 import MuteVideoGate from "../providers/MuteVideoGate";
 
@@ -13,19 +14,21 @@ const VideoEditorDynamic = dynamic(() => import("../components/VideoEditor"), { 
 const Home: NextPage = () => {
   return (
     <div>
-      <MuteVideoGate>
-        <AllVideoProvider>
-          <MergedVideoProvider>
-            <Head>
-              <title>molly archive editor </title>
-            </Head>
-            <main className="padded">
-              <Desktop />
-              <VideoEditorDynamic />
-            </main>
-          </MergedVideoProvider>
-        </AllVideoProvider>
-      </MuteVideoGate>
+      <LoadingGate>
+        <MuteVideoGate>
+          <AllVideoProvider>
+            <MergedVideoProvider>
+              <Head>
+                <title>molly archive editor </title>
+              </Head>
+              <main className="padded">
+                <Desktop />
+                <VideoEditorDynamic />
+              </main>
+            </MergedVideoProvider>
+          </AllVideoProvider>
+        </MuteVideoGate>
+      </LoadingGate>
     </div>
   );
 };

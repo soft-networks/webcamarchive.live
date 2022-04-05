@@ -13,7 +13,7 @@ const MuteVideoGate = ({ children }: { children: React.ReactNode }) => {
 
     return (
       <MuteVideoContext.Provider value={{ muteVideo }}>
-        <div className={"mute"} onClick={() => setMuteVideo((m) => !m)}>
+        <div className={"mute button"} onClick={() => setMuteVideo((m) => !m)}>
           {muteVideo ? "play sound" : "mute sound"}
         </div>
         {children}

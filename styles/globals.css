@@ -19,6 +19,13 @@
   --s-3: calc(var(--s-2) / var(--ratio));
   --s-4: calc(var(--s-3) / var(--ratio));
   --s-5: calc(var(--s-4) / var(--ratio));
+
+  --green: rgb(178, 247, 155);
+  --yellow: yellow;
+  --black: black;
+  --pink: hotpink;
+  --gray: gray;
+  --darkGray: #333;
 }
 
 a {
@@ -37,6 +44,19 @@ body {
   position: relative;
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(2px);
+  z-index: 900000;
+}
+.loading-overlay div {
+  white-space: pre;
+  text-align: center;
+  padding-top: 30vh;
+}
 .hideOverflow {
   overflow: hidden;
 }
@@ -50,15 +70,37 @@ body {
   flex-direction: column;
   top: 30%;
   left: 30%;
-  width: 50%;
-  max-width: 800px;
+  --editorWidth: min(50vw, 540px);
+  --editorColor: var(--green);
+  width: var(--editorWidth);
+  border: 1px solid var(--darkGray);
+  box-shadow: 0px 0px 30px var(--editorColor);
+}
+
+.previewVideo {
+  width: 100%;
+  display: block;
+  height: calc(var(--editorWidth) / 1.5 - 2px); 
   background: #eee;
-  border: 1px solid rgb(178, 247, 155);;
+}
+
+.previewVideo.hide {
+  display: none;
+}
+.previewVideo video {
+  width: 100%;
 }
 
 .videoEditor .handle {
   height: 20px;
-  background: rgb(178, 247, 155);
+  background: var(--green);
+  border-bottom: 1px solid var(--black);
+}
+.videoEditor .pause {
+  position: absolute;
+  top: 3px;
+  right: var(--s-3);
+  z-index: 99999;
 }
 .videoTimelineContainer {
   height: 92px;
@@ -68,34 +110,41 @@ body {
   height: 100px;
   display: flex;
   width: 100%;
-  padding: var(--s0) 0px;
-  background: rgb(67, 67, 67);
+  padding: 0px 0px;
+  background: var(--black);
   height: 100%;
   
 }
 
 .timelineCursor {
   width: 3px;
-  height: 100%;
-  background: hotpink;
+  height: var(--s0);
+  width: var(--s0);
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0px 0px 12px var(--pink);
   z-index: 5000;
   position: absolute;
+  transform: translate(-50%, -50%);
 }
 
-.mute {
-  position: fixed;
-  z-index: 9000;
-  top: var(--s0);
-  right: var(--s0);
-  background: yellow;
+.button {
   border-radius: var(--s-1);
   padding: var(--s-2);
   cursor: pointer;
+  background: var(--yellow);
+  border: 1px solid var(--black);
 }
-
-.mute:hover {
+.button:hover {
   background: lightgoldenrodyellow;
 }
+.mute {
+  position: fixed;
+  z-index: 9000;
+  top: var(--s-1);
+  right: var(--s-1); 
+}
+
 
 .desktopFile {
   width: 5%;
@@ -103,14 +152,14 @@ body {
 }
 .desktopFile img {
   width: 100%;
-  box-shadow: 0px 0px 5px black;
-  border: 1px solid black;
+  box-shadow: 0px 0px 5px var(--gray);
+  border: 1px solid var(--gray);
 }
 .desktopFile video {
   width: 100%;
   position: absolute;
-  box-shadow: 0px 0px 5px green;
-  border: 1px solid green;
+  box-shadow: 0px 0px 5px var(--green);
+  border: 1px solid var(--green);
 }
 
 
@@ -119,22 +168,19 @@ body {
   word-wrap: break-word;
   margin: 0 auto;
   text-align: center;
-  text-shadow: 0px 0px 5px gray;
+  color: var(--darkGray);
+  text-shadow: 0px 0px 5px var(--gray);
 }
 
 .videoDropZone {
-  background: gray;
-  border-left: 1px solid rgb(67, 67, 67);
-  border-right: 2px solid rgb(67, 67, 67);
+  
 }
 .videoDropZone .caption {
   color: white;
-  padding: var(--s-3);
   position: absolute;
   bottom: 0;
   width: 100%;
   text-align: center;
-  left: 1px;
   z-index: 1;
 }
 .videoDropZone .poster {
@@ -143,21 +189,17 @@ body {
   z-index: 0;
   left: -60%;
 }
-.videoDropZone:hover, .videoDropZone.hasVideo:hover {
-  background: paleturquoise;
+.videoDropZone:hover  {
+  background: var(--yellow);  
 }
-.videoDropZone.hasVideo {
-  background: lightseagreen;
+.videoDropZone.hasVideo:hover img {
+  opacity: 0.2;
+}
+.videoDropZone:hover .caption {
+  color: black;
+  background-color: var(--yellow);
 }
 
-.previewVideo {
-  width: 100%;
-  display: block;
-}
-
-.previewVideo.hide {
-  display: none;
-}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -182,14 +224,20 @@ body {
 }
 .desktopFile.react-draggable  {
   cursor: grab;
+  
 }
 .desktopFile.react-draggable-dragging {
   pointer-events: none;
   opacity: 0.5;
   cursor: grabbing;
+  background: var(--yellow)
 }
 
 .desktopFile.react-draggable-dragging img {
-  border: 1px solid red;
-  
+  border: 1px solid yellow;
+  box-shadow: 0px 0px 12px yellow;
+}
+.desktopFile:hover img {
+  box-shadow: 0px 0px 5px var(--green);
+  border: 1px solid var(--green);
 }

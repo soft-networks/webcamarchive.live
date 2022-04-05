@@ -5,8 +5,8 @@ import classNames from "classnames";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { useEffect, useRef, useState } from "react";
 import { useDragManager } from "../providers/DragManagerProvider";
-import { useMergedVideo } from "../providers/MergedVideoProvider";
 import { useMuteVideoGate } from "../providers/MuteVideoGate";
+import { useAllVideos } from "../providers/AllVideoProvider";
 
 
 interface DesktopVideoFileProps {
@@ -19,6 +19,8 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const {muteVideo} = useMuteVideoGate();
   const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
+  const {desktopImageLoaded} = useAllVideos();
+
   const onDrag :DraggableEventHandler = (e, data) => {  
     setVideoBeingDragged(video.id)
     setIsHovering(false);
@@ -34,7 +36,7 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
       >
         <div style={{ position: "relative" }} className={classNames({ noselect: true, noevents: true })}>
           {isHovering ? <video src={video.videoSrc} muted={muteVideo} autoPlay loop poster={video.imageSrc}/> : ""}
-          <img src={video.imageSrc} alt={`Thumbnail for ${video.id}`} key={`img-${video.id}`} />
+          <img src={video.imageSrc} alt={`Thumbnail for ${video.id}`} key={`img-${video.id}`} onLoad={() => {console.log("hey"); desktopImageLoaded(); }}/>
           <div>
             <div className="caption">{video.id}.mp4</div>
           </div>

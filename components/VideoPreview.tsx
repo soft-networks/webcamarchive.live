@@ -9,66 +9,58 @@ interface VideoPreviewProps {
   videoNumber: number;
 }
 const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
-  const { mergedVideoList: videoList } = useMergedVideo();
+  const { mergedVideoList } = useMergedVideo();
   const { getVideoById } = useAllVideos();
   return (
     <div>
-      <StaticVideoPlayer playing={videoList[videoNumber] == undefined} />
-      {videoList.map((video, index) =>
-        video ? <VideoPreviewPlayer key={index} video={getVideoById(video)} playing={index === videoNumber} /> : ""
-      )}
+      {mergedVideoList.map((videoID, index) => {
+        let video = videoID ? getVideoById(videoID) : undefined;
+        return <VideoPreviewPlayer key={index} video={video} playing={index === videoNumber} />;
+      })}
     </div>
   );
 };
 
 interface VideoPreviewPlayerProps {
   playing: boolean;
-  video: Video | null;
+  video?: Video;
 }
 
 const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
-  const {muteVideo} = useMuteVideoGate();
+  const { muteVideo } = useMuteVideoGate();
 
   useEffect(() => {
     if (videoPlayerRef.current) {
       if (playing) {
-        try {
           videoPlayerRef.current.play();
-        } catch (e) {
-          console.error("you need to click somewhere first");
-        }
       } else {
         videoPlayerRef.current.pause();
       }
     }
   }, [playing]);
   return (
-    <video
-      muted={muteVideo || video === undefined}
-      src={video ? video.videoSrc : TEST_STATIC_URL}
-      ref={videoPlayerRef}
-      className={classnames({ hide: !playing, previewVideo: true })}
-      preload={"auto"}
-      poster={video ? video.imageSrc : ""}
-    />
+    <div className={classnames({hide: !playing, previewVideo: true})} >
+      {video ? (
+        <video
+          muted={muteVideo || video === undefined}
+          src={video.videoSrc}
+          ref={videoPlayerRef}
+          preload={"auto"}
+          poster={video ? video.imageSrc : ""}
+        />
+      ) : null}
+    </div>
   );
 };
 
-interface StaticVideoPlayerProps {
-  playing: boolean;
-}
-const StaticVideoPlayer: React.FC<StaticVideoPlayerProps> = ({ playing }) => {
-  return (
-    <video
-      muted
-      autoPlay
-      src={TEST_STATIC_URL}
-      className={classnames({ hide: !playing, previewVideo: true })}
-      preload={"auto"}
-      loop
-    />
-  );
-};
+// interface StaticVideoPlayerProps {}
+// const StaticVideoPlayer: React.FC<StaticVideoPlayerProps> = ({}) => {
+//   return (
+//     <div style={{ width: "100%" }}>
+//       <div style={{ paddingBottom: "66.66%" }}></div>
+//     </div>
+//   );
+// };
 
 export default VideoPreview;
