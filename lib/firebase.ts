@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, off, set, push, onChildAdded , once, get} from "firebase/database";
+import { getDatabase, ref, onValue, off, set, push, onChildAdded , get} from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDEELIQs6LfHdFCnqUUNluk7tXKodeHIwE",
@@ -43,9 +43,9 @@ export const addMessageToDB = (message: Message) => {
   set(newMessageRef, message);
 }
 
-get(messageListRef).then(( ) => {
-  firstMessageRead = true;
-})
+// get(messageListRef).then(( ) => {
+//   firstMessageRead = true;
+// })
 
 export const messageAddedToDB = (callback: (message: Message) => void) => {
 
