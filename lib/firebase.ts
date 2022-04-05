@@ -19,7 +19,7 @@ const db = getDatabase(app);
 const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
 const messageListRef = ref(db, `${DB_ROOT}/messageList`);
-let firstMessageRead = false
+let firstMessageRead = true
 
 
 export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
