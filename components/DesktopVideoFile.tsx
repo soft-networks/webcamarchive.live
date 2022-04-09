@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDragManager } from "../providers/DragManagerProvider";
 import { useMuteVideoGate } from "../providers/MuteVideoGate";
 import { useAllVideos } from "../providers/AllVideoProvider";
+import DragWrapper from "./DragWrapper";
+import slugify from "slugify";
 
 
 interface DesktopVideoFileProps {
@@ -26,7 +28,7 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
     setIsHovering(false);
   }  
   return (
-    <Draggable nodeRef={nodeRef} onDrag={onDrag}>
+    <DragWrapper nodeRef={nodeRef} onDrag={onDrag} dragID={slugify(video.id, {strict: true, remove: /[*+~.()'"!:@%]/g})}>
       <div
         className="desktopFile"
         style={{ position: "absolute", top: (initPos.current.x || 50) + "%", left: (initPos.current.y || 50) + "%" }}
@@ -42,7 +44,7 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
           </div>
         </div>
       </div>
-    </Draggable>
+    </DragWrapper>
   );
 };
 

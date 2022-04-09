@@ -39,6 +39,21 @@ body {
 
 }
 
+#preview-message {
+  position: fixed;
+  cursor: none;
+  background: var(--gray);
+  color: white;
+  top: var(--s-1);
+  left: var(--s-1);
+}
+
+main.preview .button {
+  background: var(--lightGray);
+  color: var(--gray);
+  border: 1px solid var(--gray);
+}
+
 .fullBleed {
   width: 100vw;
   height: 100vh;
@@ -264,6 +279,11 @@ body {
   pointer-events: none;
 }
 
+
+.preview .react-draggable, .preview .react-draggable > *, .preview .button, .preview .desktopFile.react-draggable{
+  cursor: default;
+  pointer-events: none;
+}
 
 .react-draggable-dragging {
   z-index: 9999;

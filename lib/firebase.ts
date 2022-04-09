@@ -19,6 +19,7 @@ const db = getDatabase(app);
 const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
 const messageListRef = ref(db, `${DB_ROOT}/messageList`);
+const dragSyncRef = ref(db, `${DB_ROOT}/dragSync`);
 let firstMessageRead = true
 
 
@@ -62,4 +63,22 @@ export const messageAddedToDB = (callback: (message: Message) => void) => {
 
 export const disableMessageAddedToDB = () => {
   off(messageListRef);
+}
+
+export const setupDragSync = (dragSyncCallback: (dragSyncs: {[key: string]: {top: number, left: number}})=>void ) => {
+  onValue(dragSyncRef, (snapshot) => {
+    let val = snapshot.val();
+    if (val) {
+      dragSyncCallback(val);
+    } else {
+      dragSyncCallback({});
+    }
+  });
+}
+export const syncDragWithID = (dragID: string, top: number, left: number) => {
+  const specificDragRef = ref(db, `${DB_ROOT}/dragSync/${dragID}`);
+  set(specificDragRef, {top, left});
+}
+export const disableDragSync = () => {
+  off(dragSyncRef);
 }

@@ -4,6 +4,7 @@ import VideoPreview from "./VideoPreview";
 import VideoTimeline from "./VideoTimeline";
 import Draggable from "react-draggable";
 import { useLoaded } from "../providers/LoadingGate";
+import DragWrapper from "./DragWrapper";
 
 const VideoEditor : React.FC = () => {
 
@@ -36,14 +37,14 @@ const VideoEditor : React.FC = () => {
 
 
   return (
-    loaded ? <Draggable handle=".handle" nodeRef={myRef}>
+    loaded ? <DragWrapper handle=".handle" nodeRef={myRef} dragID={"EDITOR"}>
       <div className="videoEditor" ref={myRef}>
         <div className="handle"> •••</div>
         <div onClick={ () => setPause(!pause)} className="pause button"> {pause ? "unpause" : "pause" } </div>
         <VideoPreview videoNumber={videoNumber} />
         <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
       </div>
-    </Draggable> : null
+    </DragWrapper> : null
   );
 };
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Draggable from "react-draggable";
 import { addMessageToDB, disableMessageAddedToDB, messageAddedToDB } from "../lib/firebase";
+import DragWrapper from "./DragWrapper";
 
 const Chat: React.FunctionComponent = ({}) => {
   const [messageList, setMessageList] = useState<Message[]>([]);
@@ -25,7 +25,7 @@ const Chat: React.FunctionComponent = ({}) => {
   }, []);
 
   return (
-    <Draggable handle=".handle" nodeRef={myRef}>
+    <DragWrapper handle=".handle" nodeRef={myRef} dragID="CHAT">
     <div className="chat" ref={myRef}>
       <div className="handle"> •••</div>
       <div className="chat-input message">
@@ -54,7 +54,7 @@ const Chat: React.FunctionComponent = ({}) => {
         ))}
       </div>
     </div>
-    </Draggable>
+    </DragWrapper>
   );
 };
 
