@@ -1,36 +1,17 @@
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
+import ChatAndVideo from "../components/ChatAndVideo";
 
-import Desktop from "../components/Desktop";
-import Chat from "../components/Chat";
-import AllVideoProvider from "../providers/AllVideoProvider";
-import LoadingGate from "../providers/LoadingGate";
-import MergedVideoProvider from "../providers/MergedVideoProvider";
-import MuteVideoGate from "../providers/MuteVideoGate";
-
-const VideoEditorDynamic = dynamic(() => import("../components/VideoEditor"), { ssr: false });
 
 const Home: NextPage = () => {
   return (
     <div>
-      <LoadingGate>
-        <MuteVideoGate>
-          <AllVideoProvider>
-            <MergedVideoProvider>
-              <Head>
-                <title>molly archive editor </title>
-              </Head>
-              <main className="padded">
-              <Chat/>
-                <Desktop />
-                
-                <VideoEditorDynamic />
-              </main>
-            </MergedVideoProvider>
-          </AllVideoProvider>
-        </MuteVideoGate>
-      </LoadingGate>
+      <Head>
+        <title> molly editor </title>
+      </Head>
+      <main className="padded">
+          <ChatAndVideo/>
+      </main>
     </div>
   );
 };
