@@ -3,6 +3,7 @@ import classnames from "classnames";
 import { useAllVideos } from "../providers/AllVideoProvider";
 import { useDragManager } from "../providers/DragManagerProvider";
 import { NUM_VIDEO, useMergedVideo } from "../providers/MergedVideoProvider";
+import videoInfo from "../providers/VideoInfo";
 
 interface VideoTimelineProps {
   videoNumber: number;
@@ -51,8 +52,7 @@ interface VideoEditorThumbnailProps {
 }
 
 const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dropZonenumber }) => {
-  const { getVideoById } = useAllVideos();
-  const video = videoID ? getVideoById(videoID) : undefined;
+  const video = videoID ? videoInfo.getVideoById(videoID) : undefined;
 
   return (
     <div

@@ -5,16 +5,12 @@ import { useSetLoadingPercent } from "./LoadingGate";
 
 interface AllVideoContextType {
   desktopVideoIDs: string[];
-  getVideoById: (id: string) => Video;
   removeVideoFromDesktop: (id: string) => void;
   addVideoToDesktop: (id: string) => void;
   desktopImageLoaded: () => void;
 }
 export const AllVideoContext = createContext<AllVideoContextType>({
   desktopVideoIDs: [],
-  getVideoById: () => {
-    return {} as Video;
-  },
   removeVideoFromDesktop: () => {},
   addVideoToDesktop: () => {},
   desktopImageLoaded: () => {},
@@ -39,10 +35,6 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [numLoaded, desktopVideoIDs, setLoadingPercent]);
   
-  //TODO optimization: use callbacks here
-  const getVideoById = (id: string): Video => {
-    return allVideos.current?.[id];
-  };
   const removeVideoFromDesktop = (id: string) => {
     if (id) {
       setDesktopVideoIDs((c) => c.filter((v) => v !== id));
@@ -70,7 +62,7 @@ const AllVideoProvider = ({ children }: { children: React.ReactNode }) => {
     setDesktopVideoIDs(dv);
   }, [setDesktopVideoIDs]);
   return (
-    <AllVideoContext.Provider value={{ desktopVideoIDs, removeVideoFromDesktop, addVideoToDesktop, getVideoById, desktopImageLoaded }}>
+    <AllVideoContext.Provider value={{ desktopVideoIDs, removeVideoFromDesktop, addVideoToDesktop,  desktopImageLoaded }}>
       <DragManagerProvider>{children}</DragManagerProvider>
     </AllVideoContext.Provider>
   );

@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
 import { useMergedVideo } from "../providers/MergedVideoProvider";
-import { useAllVideos } from "../providers/AllVideoProvider";
-import { TEST_STATIC_URL } from "../lib/vidData";
 import { useMuteVideoGate } from "../providers/MuteVideoGate";
+import videoInfo from "../providers/VideoInfo";
 
 interface VideoPreviewProps {
   videoNumber: number;
 }
 const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
   const { mergedVideoList } = useMergedVideo();
-  const { getVideoById } = useAllVideos();
+  
   return (
     <div>
       {mergedVideoList.map((videoID, index) => {
-        let video = videoID ? getVideoById(videoID) : undefined;
+        let video = videoID ? videoInfo.getVideoById(videoID) : undefined;
         return <VideoPreviewPlayer key={index} video={video} playing={index === videoNumber} />;
       })}
     </div>
