@@ -3,8 +3,8 @@ import { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVide
 import VideoPreview from "./VideoPreview";
 import VideoTimeline from "./VideoTimeline";
 import Draggable from "react-draggable";
-import { useLoaded } from "../providers/LoadingGate";
 import DragWrapper from "./DragWrapper";
+import useLoadingStore from "../stores/ThumbnailLoadingStore";
 
 const VideoEditor : React.FC = () => {
 
@@ -13,7 +13,7 @@ const VideoEditor : React.FC = () => {
   const myRef = useRef<HTMLDivElement>(null);
   const startDate = useRef<number>(Date.now());
   const [pause, setPause] = useState(false);
-  const {loaded} = useLoaded();
+  const loaded = useLoadingStore(state => state.loaded);
 
   const updateTime = useCallback(() => {
     if (pause == false) {

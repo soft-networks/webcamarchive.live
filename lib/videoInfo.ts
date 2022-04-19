@@ -1,4 +1,4 @@
-import { getAllVideoList } from "../lib/vidData";
+import { getAllVideoList } from "./vidData";
 
 
 class VideoInfo {
@@ -17,6 +17,9 @@ class VideoInfo {
   }
   getAllIDs(): string[] {
     return Object.keys(this.allVideos);
+  }
+  getNumVideos(): number {
+    return this.getAllIDs().length;
   }
 }
 

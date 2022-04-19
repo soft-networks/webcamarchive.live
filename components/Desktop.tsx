@@ -1,7 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
-
-import videoInfo from "../providers/VideoInfo";
-import useDesktopVideoStore from "../stores/DesktopVideoStore";
+import videoInfo from "../lib/videoInfo";
 import DesktopVideoFile from "./DesktopVideoFile";
 
 const Desktop: React.FunctionComponent = () => {

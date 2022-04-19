@@ -1,24 +1,21 @@
 import Desktop from "../components/Desktop";
-import AllVideoProvider from "../providers/AllVideoProvider";
 import MergedVideoProvider from "../providers/MergedVideoProvider";
-import MuteVideoGate from "../providers/MuteVideoGate";
+
 import VideoEditor from "../components/VideoEditor";
-import LoadingGate from "../providers/LoadingGate";
+import LoadingScreen from "./LoadingGate";
+import MuteButton from "./MuteVideoButton";
 
 const VideoExperience = () => {
   return (
-    <LoadingGate>
-      <AllVideoProvider>
-        <MergedVideoProvider>
-          <MuteVideoGate>
-            <Desktop />
-            <VideoEditor />
-          </MuteVideoGate>
-        </MergedVideoProvider>
-      </AllVideoProvider>
-    </LoadingGate>
+    <>
+      <LoadingScreen />
+      <MuteButton />
+      <MergedVideoProvider>
+        <Desktop />
+        <VideoEditor />
+      </MergedVideoProvider>
+    </>
   );
 };
-
 
 export default VideoExperience;

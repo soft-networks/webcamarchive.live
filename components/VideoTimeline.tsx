@@ -2,7 +2,7 @@
 import classnames from "classnames";
 import { useDragManager } from "../providers/DragManagerProvider";
 import { NUM_VIDEO, useMergedVideo } from "../providers/MergedVideoProvider";
-import videoInfo from "../providers/VideoInfo";
+import videoInfo from "../lib/videoInfo";
 
 interface VideoTimelineProps {
   videoNumber: number;

@@ -5,12 +5,14 @@ import classNames from "classnames";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDragManager } from "../providers/DragManagerProvider";
-import { useMuteVideoGate } from "../providers/MuteVideoGate";
+
 
 import DragWrapper from "./DragWrapper";
 import slugify from "slugify";
 import useDesktopVideoStore from "../stores/DesktopVideoStore";
-import videoInfo from "../providers/VideoInfo";
+import videoInfo from "../lib/videoInfo";
+import useLoadingStore from "../stores/ThumbnailLoadingStore";
+import useMuteVideoStore from "../stores/MuteVideoStore";
 
 
 const DesktopVideoFile: React.FC<{ id: string }> = ({ id }) => {
@@ -25,13 +27,21 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
   const nodeRef = useRef(null);
   const {setVideoBeingDragged} = useDragManager();
   const [isHovering, setIsHovering] = useState<boolean>(false);
-  const {muteVideo} = useMuteVideoGate();
+  const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo, []) );
   const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
+  const desktopFileLoaded = useLoadingStore(state => state.desktopFileLoaded);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const onDrag :DraggableEventHandler = (e, data) => {  
     setVideoBeingDragged(video.id)
     setIsHovering(false);
   }  
+  useEffect(() => {
+    if (imageRef.current && imageRef.current.complete) {
+      desktopFileLoaded();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <DragWrapper
       nodeRef={nodeRef}
@@ -52,8 +62,9 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
             alt={`Thumbnail for ${video.id}`}
             key={`img-${video.id}`}
             onLoad={() => {
-              /*desktopImageLoaded();*/
+              desktopFileLoaded();
             }}
+            ref={imageRef}
           />
           <div>
             <div className="caption">{video.id}.mp4</div>

@@ -1,5 +1,5 @@
 import create from "zustand";
-import videoInfo from "../providers/VideoInfo";
+import videoInfo from "../lib/videoInfo";
 
 type DesktopVideos = { [key: string]: boolean };
 

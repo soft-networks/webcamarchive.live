@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import classnames from "classnames";
 import { useMergedVideo } from "../providers/MergedVideoProvider";
-import { useMuteVideoGate } from "../providers/MuteVideoGate";
-import videoInfo from "../providers/VideoInfo";
+import videoInfo from "../lib/videoInfo";
+import useMuteVideoStore from "../stores/MuteVideoStore";
 
 interface VideoPreviewProps {
   videoNumber: number;
@@ -27,7 +27,7 @@ interface VideoPreviewPlayerProps {
 
 const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
-  const { muteVideo } = useMuteVideoGate();
+  const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo , [] ));
 
   useEffect(() => {
     if (videoPlayerRef.current) {

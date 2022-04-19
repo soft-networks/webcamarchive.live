@@ -2,7 +2,6 @@ import React, { createContext, useCallback, useEffect, useRef, useState } from "
 import { disableMergedVideosSyncDB, setMergedVideoDB, syncMergedVideosDB } from "../lib/firebase";
 import useDesktopVideoStore from "../stores/DesktopVideoStore";
 
-import { useAllVideos } from "./AllVideoProvider";
 
 export const VIDEO_LENGTH = 1000;
 export const NUM_VIDEO = 30;
