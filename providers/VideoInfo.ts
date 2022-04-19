@@ -15,6 +15,9 @@ class VideoInfo {
   videoExists(id: string): boolean {
     return this.allVideos[id] !== undefined;
   }
+  getAllIDs(): string[] {
+    return Object.keys(this.allVideos);
+  }
 }
 
 

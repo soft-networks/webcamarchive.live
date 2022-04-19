@@ -3,32 +3,41 @@
 import Image from "next/image";
 import classNames from "classnames";
 import Draggable, { DraggableEventHandler } from "react-draggable";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDragManager } from "../providers/DragManagerProvider";
 import { useMuteVideoGate } from "../providers/MuteVideoGate";
-import { useAllVideos } from "../providers/AllVideoProvider";
+
 import DragWrapper from "./DragWrapper";
 import slugify from "slugify";
+import useDesktopVideoStore from "../stores/DesktopVideoStore";
+import videoInfo from "../providers/VideoInfo";
 
 
-interface DesktopVideoFileProps {
+const DesktopVideoFile: React.FC<{ id: string }> = ({ id }) => {
+  const videoIsOnDesktop = useDesktopVideoStore( useCallback(state => state.desktopVideos[id], [id]) );
+  return ( videoIsOnDesktop ? <DesktopVideoFileInternal video={videoInfo.getVideoById(id)} /> : null);
+};
+interface DesktopVideoFileInternalProps {
   video: Video;
 }
 
-const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
+const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ video }) => {
   const nodeRef = useRef(null);
   const {setVideoBeingDragged} = useDragManager();
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const {muteVideo} = useMuteVideoGate();
   const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
-  const {desktopImageLoaded} = useAllVideos();
 
   const onDrag :DraggableEventHandler = (e, data) => {  
     setVideoBeingDragged(video.id)
     setIsHovering(false);
   }  
   return (
-    <DragWrapper nodeRef={nodeRef} onDrag={onDrag} dragID={slugify(video.id, {strict: true, remove: /[*+~.()'"!:@%]/g})}>
+    <DragWrapper
+      nodeRef={nodeRef}
+      onDrag={onDrag}
+      dragID={slugify(video.id, { strict: true, remove: /[*+~.()'"!:@%]/g })}
+    >
       <div
         className="desktopFile"
         style={{ position: "absolute", top: (initPos.current.x || 50) + "%", left: (initPos.current.y || 50) + "%" }}
@@ -37,8 +46,15 @@ const DesktopVideoFile: React.FC<DesktopVideoFileProps> = ({ video }) => {
         onMouseOut={() => setIsHovering(false)}
       >
         <div style={{ position: "relative" }} className={classNames({ noselect: true, noevents: true })}>
-          {isHovering ? <video src={video.videoSrc} muted={muteVideo} autoPlay loop poster={video.imageSrc}/> : ""}
-          <img src={video.imageSrc} alt={`Thumbnail for ${video.id}`} key={`img-${video.id}`} onLoad={() => { desktopImageLoaded(); }}/>
+          {isHovering ? <video src={video.videoSrc} muted={muteVideo} autoPlay loop poster={video.imageSrc} /> : ""}
+          <img
+            src={video.imageSrc}
+            alt={`Thumbnail for ${video.id}`}
+            key={`img-${video.id}`}
+            onLoad={() => {
+              /*desktopImageLoaded();*/
+            }}
+          />
           <div>
             <div className="caption">{video.id}.mp4</div>
           </div>

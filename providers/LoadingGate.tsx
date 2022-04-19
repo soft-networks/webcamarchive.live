@@ -8,7 +8,7 @@ interface LoadedGateContextType {
 const LoadingContext = createContext<LoadedGateContextType>({ loaded: false, setLoadingPercent: () => {} });
 
 const LoadingGate = ({ children }: { children: React.ReactNode }) => {
-  const [loadingPercent, setLoadingPercent] = useState<number>(0);
+  const [loadingPercent, setLoadingPercent] = useState<number>(2);
   return (
     <LoadingContext.Provider value={{ loaded: loadingPercent >= 0.99, setLoadingPercent }}>
       {loadingPercent < 0.99 && (
@@ -28,7 +28,7 @@ export default LoadingGate;
 
 export const useSetLoadingPercent = () => {
   const { setLoadingPercent } = useContext(LoadingContext);
-  return { setLoadingPercent };
+  return  { setLoadingPercent: (n: number) => {return}};
 };
 
 export const useLoaded = () => {

@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { useAllVideos } from "../providers/AllVideoProvider";
+
 import videoInfo from "../providers/VideoInfo";
+import useDesktopVideoStore from "../stores/DesktopVideoStore";
 import DesktopVideoFile from "./DesktopVideoFile";
 
 const Desktop: React.FunctionComponent = () => {
-  const {desktopVideoIDs} = useAllVideos();
+  const desktopVideoIDs = videoInfo.getAllIDs();
 
   return (
     <div className="fullBleed hideOverflow" >
       {desktopVideoIDs.map((vid) => (
-        <DesktopVideoFile key={vid + "-thumb"} video={videoInfo.getVideoById(vid)}/>
+        <DesktopVideoFile key={vid + "-thumb"} id={vid}/>
       ))}
     </div>
   );

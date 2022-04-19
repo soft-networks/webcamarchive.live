@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { disableMergedVideosSyncDB, setMergedVideoDB, syncMergedVideosDB } from "../lib/firebase";
+import useDesktopVideoStore from "../stores/DesktopVideoStore";
 
 import { useAllVideos } from "./AllVideoProvider";
 
@@ -16,7 +17,9 @@ export const MergedVideoContext = createContext<MergedVideoContextType>({
 
 const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
   const [videoListState, setVideoListState] = useState<(string | undefined)[]>([]);
-  const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
+  // const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
+  const removeVideoFromDesktop = useDesktopVideoStore(useCallback(state => state.removeVideoFromDesktop, []));
+  const addVideoToDesktop = useDesktopVideoStore(useCallback(state => state.addVideoToDesktop, []));
   const stateRef = useRef<(string|undefined)[]>();
   useEffect(() => {
     stateRef.current = videoListState;

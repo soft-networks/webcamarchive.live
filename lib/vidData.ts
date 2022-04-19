@@ -1,3 +1,4 @@
+
 let vidnames = [
   "----!!!",
   "-___-",
@@ -237,6 +238,9 @@ let vidnames = [
 ];
 
 const root = "https://storage.googleapis.com/molly-archive/content/";
+
+let viddnamessmol = vidnames.slice(0, 5);
+
 
 export function getAllVideoList() {
   
