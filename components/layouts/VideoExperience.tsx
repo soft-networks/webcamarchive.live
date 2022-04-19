@@ -1,5 +1,4 @@
 import Desktop from "../apps/Desktop";
-import MergedVideoProvider from "../../providers/MergedVideoProvider";
 
 import MergedVideoEditor from "../apps/MergedVideoEditor";
 import LoadingScreen from "../ui/LoadingScreen";
@@ -10,10 +9,8 @@ const VideoExperience = () => {
     <>
       <LoadingScreen />
       <MuteButton />
-      <MergedVideoProvider>
-        <Desktop />
-        <MergedVideoEditor />
-      </MergedVideoProvider>
+      <Desktop />
+      <MergedVideoEditor />
     </>
   );
 };

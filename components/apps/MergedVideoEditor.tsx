@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../../providers/MergedVideoProvider";
+import MergedVideoProvider, { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../../providers/MergedVideoProvider";
 import MergedVideoPlayer from "../ui/MergedVideoViewer";
 import VideoTimeline from "../ui/MergedVideoTimeline";
 import DragWrapper from "../DragWrapper";
@@ -40,8 +40,10 @@ const MergedVideoEditor : React.FC = () => {
       <div className="videoEditor" ref={myRef}>
         <div className="handle"> •••</div>
         <div onClick={ () => setPause(!pause)} className="pause button"> {pause ? "unpause" : "pause" } </div>
-        <MergedVideoPlayer videoNumber={videoNumber} />
-        <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
+        <MergedVideoProvider>
+         <MergedVideoPlayer videoNumber={videoNumber} />
+          <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
+        </MergedVideoProvider>
       </div>
     </DragWrapper> : null
   );

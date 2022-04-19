@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import classnames from "classnames";
-import { useDragManager } from "../../providers/DragManagerProvider";
 import { NUM_VIDEO, useMergedVideo } from "../../providers/MergedVideoProvider";
 import videoInfo from "../../lib/videoInfo";
+import { useCallback } from "react";
+import useVideoDragStore from "../../stores/VideoDragStore";
 
 interface VideoTimelineProps {
   videoNumber: number;
@@ -29,15 +30,19 @@ interface VideoDropZoneProps {
   dropZoneNumber: number;
 }
 const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
-  const { amDraggingGlobal, videoBeingDragged, setVideoBeingDragged } = useDragManager();
+  const amDraggingGlobal = useVideoDragStore(useCallback(state => state.amDraggingGlobal, []));
+  const videoBeingDragged = useVideoDragStore(useCallback(state => state.videoBeingDragged, []));
+  const setVideoBeingDragged = useVideoDragStore(useCallback(state => state.setVideoBeingDragged, []));
+
   const { mergeVideoAtIndex, mergedVideoList } = useMergedVideo();
 
-  const dropped = () => {
+  const dropped = useCallback(() => {
     if (amDraggingGlobal && videoBeingDragged) {
       mergeVideoAtIndex(dropZoneNumber, videoBeingDragged);
       setVideoBeingDragged(undefined);
     }
-  };
+  }, [amDraggingGlobal, dropZoneNumber, mergeVideoAtIndex, videoBeingDragged, setVideoBeingDragged]);
+  
   return (
     <div style={{ width: 1000 / NUM_VIDEO + "%", height: "100%" }} onMouseUp={() => dropped()}>
       <VideoEditorThumbnail videoID={mergedVideoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />

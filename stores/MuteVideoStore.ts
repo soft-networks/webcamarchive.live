@@ -7,7 +7,7 @@ interface MuteVideoStoreState {
 }
 
 const useMuteVideoStore = create<MuteVideoStoreState>((set) => ({
-  muteVideo: false,
+  muteVideo: true,
   toggleMuteVideo: () => {
     set((state) => ({
       muteVideo: !state.muteVideo,

@@ -2,17 +2,15 @@
 
 import Image from "next/image";
 import classNames from "classnames";
-import Draggable, { DraggableEventHandler } from "react-draggable";
+import { DraggableEventHandler } from "react-draggable";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDragManager } from "../../providers/DragManagerProvider";
-
-
 import DragWrapper from "../DragWrapper";
 import slugify from "slugify";
 import useDesktopVideoStore from "../../stores/DesktopVideoStore";
 import videoInfo from "../../lib/videoInfo";
 import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 import useMuteVideoStore from "../../stores/MuteVideoStore";
+import useVideoDragStore from "../../stores/VideoDragStore";
 
 
 const DesktopVideoFile: React.FC<{ id: string }> = ({ id }) => {
@@ -25,17 +23,20 @@ interface DesktopVideoFileInternalProps {
 
 const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ video }) => {
   const nodeRef = useRef(null);
-  const {setVideoBeingDragged} = useDragManager();
+  const imageRef = useRef<HTMLImageElement>(null);
+  const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
+
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo, []) );
-  const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
+  const setVideoBeingDragged = useVideoDragStore(useCallback(state => state.setVideoBeingDragged, []));
   const desktopFileLoaded = useLoadingStore(state => state.desktopFileLoaded);
-  const imageRef = useRef<HTMLImageElement>(null);
 
-  const onDrag :DraggableEventHandler = (e, data) => {  
+
+  const onDrag :DraggableEventHandler = useCallback((e, data) => {  
     setVideoBeingDragged(video.id)
     setIsHovering(false);
-  }  
+  } , [setVideoBeingDragged, video.id]);
+
   useEffect(() => {
     if (imageRef.current && imageRef.current.complete) {
       desktopFileLoaded();

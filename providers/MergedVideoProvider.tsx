@@ -11,12 +11,11 @@ export interface MergedVideoContextType {
 }
 export const MergedVideoContext = createContext<MergedVideoContextType>({
   mergedVideoList: [],
-  mergeVideoAtIndex: () => {},
+  mergeVideoAtIndex: () => { console.log("PROVIDER NOT SET"); },
 });
 
 const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
   const [videoListState, setVideoListState] = useState<(string | undefined)[]>([]);
-  // const { removeVideoFromDesktop, addVideoToDesktop } = useAllVideos();
   const removeVideoFromDesktop = useDesktopVideoStore(useCallback(state => state.removeVideoFromDesktop, []));
   const addVideoToDesktop = useDesktopVideoStore(useCallback(state => state.addVideoToDesktop, []));
   const stateRef = useRef<(string|undefined)[]>();
@@ -24,12 +23,10 @@ const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
     stateRef.current = videoListState;
   }, [videoListState])
   const handleDBChange = (newMergedVideoList: { [key: string]: string }) => {
-    console.log(" ***** RECEIVED UPDATE ******");
     let currentVideos = stateRef.current ? [...stateRef.current] : [];
     for (let i =0; i<NUM_VIDEO; i++) {
       let oldVid = currentVideos[i] ;
       let newVid = newMergedVideoList[i + ''] || undefined;
-      
       if (oldVid !== newVid) {
         if (newVid) {  removeVideoFromDesktop(newVid)};
         if (oldVid) {  addVideoToDesktop(oldVid)};
@@ -39,6 +36,7 @@ const MergedVideoProvider = ({ children }: { children: React.ReactNode }) => {
     setVideoListState(currentVideos);
   };
   const mergeVideoAtIndex = (index: number, videoID: string) => {
+    console.log("Merging video into timeline now");
     setMergedVideoDB(index, videoID);
   };
   useEffect(() => {
