@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { createContext, useContext, useState } from "react";
-import useMuteVideoStore from "../stores/MuteVideoStore";
+import useMuteVideoStore from "../../stores/MuteVideoStore";
 
 
 const MuteButton = () => {

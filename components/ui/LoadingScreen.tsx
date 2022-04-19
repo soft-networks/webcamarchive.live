@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import useLoadingStore from "../stores/ThumbnailLoadingStore";
+import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 const LoadingScreen = () => {
   const loaded = useLoadingStore((state) => state.loaded);
   return !loaded ? <LoadingDisplay /> : null;

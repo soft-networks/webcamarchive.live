@@ -1,31 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import classnames from "classnames";
-import { useMergedVideo } from "../providers/MergedVideoProvider";
-import videoInfo from "../lib/videoInfo";
-import useMuteVideoStore from "../stores/MuteVideoStore";
+import { useMergedVideo } from "../../providers/MergedVideoProvider";
+import videoInfo from "../../lib/videoInfo";
+import useMuteVideoStore from "../../stores/MuteVideoStore";
 
-interface VideoPreviewProps {
+interface MergedVideoPlayerProps {
   videoNumber: number;
 }
-const VideoPreview: React.FC<VideoPreviewProps> = ({ videoNumber }) => {
+const MergedVideoPlayer: React.FC<MergedVideoPlayerProps> = ({ videoNumber }) => {
   const { mergedVideoList } = useMergedVideo();
   
   return (
     <div>
       {mergedVideoList.map((videoID, index) => {
         let video = videoID ? videoInfo.getVideoById(videoID) : undefined;
-        return <VideoPreviewPlayer key={index} video={video} playing={index === videoNumber} />;
+        return <IndividualMergedVideoPlayer key={index} video={video} playing={index === videoNumber} />;
       })}
     </div>
   );
 };
 
-interface VideoPreviewPlayerProps {
+interface IndividualMergedVideoPlayerProps {
   playing: boolean;
   video?: Video;
 }
 
-const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ playing, video }) => {
+const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideoPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
   const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo , [] ));
 
@@ -53,13 +53,4 @@ const VideoPreviewPlayer: React.FunctionComponent<VideoPreviewPlayerProps> = ({ 
   );
 };
 
-// interface StaticVideoPlayerProps {}
-// const StaticVideoPlayer: React.FC<StaticVideoPlayerProps> = ({}) => {
-//   return (
-//     <div style={{ width: "100%" }}>
-//       <div style={{ paddingBottom: "66.66%" }}></div>
-//     </div>
-//   );
-// };
-
-export default VideoPreview;
+export default MergedVideoPlayer;

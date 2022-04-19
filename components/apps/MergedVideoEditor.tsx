@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../providers/MergedVideoProvider";
-import VideoPreview from "./VideoPreview";
-import VideoTimeline from "./VideoTimeline";
-import Draggable from "react-draggable";
-import DragWrapper from "./DragWrapper";
-import useLoadingStore from "../stores/ThumbnailLoadingStore";
+import { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../../providers/MergedVideoProvider";
+import MergedVideoPlayer from "../ui/MergedVideoViewer";
+import VideoTimeline from "../ui/MergedVideoTimeline";
+import DragWrapper from "../DragWrapper";
+import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 
-const VideoEditor : React.FC = () => {
+const MergedVideoEditor : React.FC = () => {
 
   const [videoNumber, setVideoNumber] = useState(0);
   const [sliderPos, setSliderPos] = useState(0);
@@ -41,11 +40,11 @@ const VideoEditor : React.FC = () => {
       <div className="videoEditor" ref={myRef}>
         <div className="handle"> •••</div>
         <div onClick={ () => setPause(!pause)} className="pause button"> {pause ? "unpause" : "pause" } </div>
-        <VideoPreview videoNumber={videoNumber} />
+        <MergedVideoPlayer videoNumber={videoNumber} />
         <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
       </div>
     </DragWrapper> : null
   );
 };
 
-export default VideoEditor;
+export default MergedVideoEditor;

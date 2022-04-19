@@ -4,15 +4,15 @@ import Image from "next/image";
 import classNames from "classnames";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDragManager } from "../providers/DragManagerProvider";
+import { useDragManager } from "../../providers/DragManagerProvider";
 
 
-import DragWrapper from "./DragWrapper";
+import DragWrapper from "../DragWrapper";
 import slugify from "slugify";
-import useDesktopVideoStore from "../stores/DesktopVideoStore";
-import videoInfo from "../lib/videoInfo";
-import useLoadingStore from "../stores/ThumbnailLoadingStore";
-import useMuteVideoStore from "../stores/MuteVideoStore";
+import useDesktopVideoStore from "../../stores/DesktopVideoStore";
+import videoInfo from "../../lib/videoInfo";
+import useLoadingStore from "../../stores/ThumbnailLoadingStore";
+import useMuteVideoStore from "../../stores/MuteVideoStore";
 
 
 const DesktopVideoFile: React.FC<{ id: string }> = ({ id }) => {

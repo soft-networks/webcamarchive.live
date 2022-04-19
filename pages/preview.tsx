@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import ChatAndVideo from "../components/ChatAndVideo";
+import ChatAndVideo from "../components/layouts/ChatAndVideo";
 import DragSyncProvider from "../providers/DragSyncProvider";
 
 

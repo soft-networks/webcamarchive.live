@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import classnames from "classnames";
-import { useDragManager } from "../providers/DragManagerProvider";
-import { NUM_VIDEO, useMergedVideo } from "../providers/MergedVideoProvider";
-import videoInfo from "../lib/videoInfo";
+import { useDragManager } from "../../providers/DragManagerProvider";
+import { NUM_VIDEO, useMergedVideo } from "../../providers/MergedVideoProvider";
+import videoInfo from "../../lib/videoInfo";
 
 interface VideoTimelineProps {
   videoNumber: number;

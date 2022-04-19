@@ -1,5 +1,5 @@
-import videoInfo from "../lib/videoInfo";
-import DesktopVideoFile from "./DesktopVideoFile";
+import videoInfo from "../../lib/videoInfo";
+import DesktopVideoFile from "../ui/DesktopVideoFile";
 
 const Desktop: React.FunctionComponent = () => {
   const desktopVideoIDs = videoInfo.getAllIDs();

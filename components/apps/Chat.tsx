@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { addMessageToDB, disableMessageAddedToDB, messageAddedToDB } from "../lib/firebase";
-import DragWrapper from "./DragWrapper";
+import { addMessageToDB, disableMessageAddedToDB, messageAddedToDB } from "../../lib/firebase";
+import DragWrapper from "../DragWrapper";
 
 const Chat: React.FunctionComponent = ({}) => {
   const [messageList, setMessageList] = useState<Message[]>([]);

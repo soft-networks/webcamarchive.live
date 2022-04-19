@@ -1,4 +1,4 @@
-import Chat from "./Chat";
+import Chat from "../apps/Chat";
 import VideoExperience from "./VideoExperience";
 
 const ChatAndVideo = () => {
