@@ -28,26 +28,32 @@ interface IndividualMergedVideoPlayerProps {
 const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideoPlayerProps> = ({ playing, video }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
   const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo , [] ));
+  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    if (videoPlayerRef.current) {
+    if (videoPlayerRef.current && videoLoaded) {
       if (playing) {
+          
           videoPlayerRef.current.play();
       } else {
         videoPlayerRef.current.pause();
+        videoPlayerRef.current.currentTime = 0;
       }
     }
-  }, [playing]);
+  }, [playing, videoLoaded]);
   return (
     <div className={classnames({hide: !playing, previewVideo: true})} >
+      {!videoLoaded && <div className="loading-indicator">Loading...</div>}
       {video ? (
         <video
           muted={muteVideo || video === undefined}
-          src={video.videoSrc}
           ref={videoPlayerRef}
+          poster={""}
           preload={"auto"}
-          poster={video ? video.imageSrc : ""}
-        />
+          onLoadedData={() => setVideoLoaded(true)}
+          playsInline
+          src={video.videoSrc}
+        /> 
       ) : null}
     </div>
   );

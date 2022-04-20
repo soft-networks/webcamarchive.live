@@ -36,13 +36,15 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
 
   const { mergeVideoAtIndex, mergedVideoList } = useMergedVideo();
 
-  const dropped = useCallback(() => {
+  const dropped = () =>  {
+    console.log("dropped", amDraggingGlobal, videoBeingDragged);
     if (amDraggingGlobal && videoBeingDragged) {
+      
       mergeVideoAtIndex(dropZoneNumber, videoBeingDragged);
       setVideoBeingDragged(undefined);
     }
-  }, [amDraggingGlobal, dropZoneNumber, mergeVideoAtIndex, videoBeingDragged, setVideoBeingDragged]);
-  
+  }
+
   return (
     <div style={{ width: 1000 / NUM_VIDEO + "%", height: "100%" }} onMouseUp={() => dropped()}>
       <VideoEditorThumbnail videoID={mergedVideoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />

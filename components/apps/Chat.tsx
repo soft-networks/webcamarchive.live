@@ -17,7 +17,6 @@ const Chat: React.FunctionComponent = ({}) => {
 
   useEffect(() => {
     messageAddedToDB((message: Message) => {
-      console.log("RECEIVED A MESSAGE",message);
       setMessageList((p) => [message, ...p]);
     });
     return () => disableMessageAddedToDB();

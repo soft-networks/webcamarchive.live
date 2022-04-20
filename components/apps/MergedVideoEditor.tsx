@@ -10,18 +10,17 @@ const MergedVideoEditor : React.FC = () => {
   const [videoNumber, setVideoNumber] = useState(0);
   const [sliderPos, setSliderPos] = useState(0);
   const myRef = useRef<HTMLDivElement>(null);
-  const startDate = useRef<number>(Date.now());
+  const elapsedTime = useRef<number>(0);
   const [pause, setPause] = useState(false);
   const loaded = useLoadingStore(state => state.loaded);
 
   const updateTime = useCallback(() => {
     if (pause == false) {
-      const now = Date.now();
-      const elapsedTime = now - startDate.current;
-      const elapsedVideos = Math.floor(elapsedTime / VIDEO_LENGTH);
+      elapsedTime.current += 100;
+      const elapsedVideos = Math.floor(elapsedTime.current / VIDEO_LENGTH);
       const videoNum = elapsedVideos % NUM_VIDEO;
       const totalVideoLength = NUM_VIDEO * VIDEO_LENGTH;
-      const sliderPos = (elapsedTime % totalVideoLength) / totalVideoLength;
+      const sliderPos = (elapsedTime.current % totalVideoLength) / totalVideoLength;
       setVideoNumber(videoNum);
       setSliderPos(sliderPos);
     }
@@ -42,7 +41,7 @@ const MergedVideoEditor : React.FC = () => {
         <div onClick={ () => setPause(!pause)} className="pause button"> {pause ? "unpause" : "pause" } </div>
         <MergedVideoProvider>
          <MergedVideoPlayer videoNumber={videoNumber} />
-          <VideoTimeline videoNumber={videoNumber} sliderPos={sliderPos}/>
+          <VideoTimeline videoNumber={pause ?  100 : videoNumber} sliderPos={sliderPos}/>
         </MergedVideoProvider>
       </div>
     </DragWrapper> : null

@@ -46,7 +46,7 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
   return (
     <DragWrapper
       nodeRef={nodeRef}
-      onDrag={onDrag}
+      onStart={onDrag}
       dragID={slugify(video.id, { strict: true, remove: /[*+~.()'"!:@%]/g })}
     >
       <div

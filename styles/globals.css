@@ -1,11 +1,6 @@
 :root {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 
   --ratio: 1.4;
   --s0: 1em;
@@ -20,24 +15,37 @@
   --s-4: calc(var(--s-3) / var(--ratio));
   --s-5: calc(var(--s-4) / var(--ratio));
 
-  --green: rgb(178, 247, 155);
-  --yellow: yellow;
-  --black: black;
-  --pink: hotpink;
+  
+  
+  --textColor: black;
+  --color1: rgb(178, 247, 155);
+  --color2: hotpink;
+  --color3: yellow;
   --lightGray: #eee;
   --gray: gray;
   --darkGray: #333;
+  --bgURL: url('https://storage.googleapis.com/molly-archive/backgrounds/BG9.gif')
 }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+
+
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
-body {
-  background:  white;;
 
+.backgroundHolder {
+  background-image: var(--bgURL);
+  background-size: auto;
 }
+
 
 #preview-message {
   position: fixed;
@@ -51,7 +59,7 @@ body {
 main.preview .button {
   background: var(--lightGray);
   color: var(--gray);
-  border: 1px solid var(--gray);
+  border: 1px solid var(--black);
 }
 
 .fullBleed {
@@ -87,9 +95,9 @@ main.preview .button {
   top: 30%;
   left: 30%;
   --editorWidth: min(50vw, 540px);
-  --editorColor: var(--green);
+  --editorColor: var(--color1);
   width: var(--editorWidth);
-  border: 1px solid var(--darkGray);
+  border: 1px solid var(--black);
   box-shadow: 0px 0px 30px var(--editorColor);
 }
 
@@ -100,13 +108,14 @@ main.preview .button {
   flex-direction:  column;
   left: 10%;
   right: 10%;
-  width: calc(13% + 2 * var(--s-1));
+  width: calc(19% + 2 * var(--s-1));
   min-width: calc(15ch + 2 * var(--s-1));
   z-index: 99999;
   border: 1px solid var(--black);
-  box-shadow: 0px 0px 12px var(--green);
+  box-shadow: 0px 0px 12px var(--color1);
 }
 .chat .message {
+  
   padding: var(--s-1);
   box-sizing: border-box;
 }
@@ -121,10 +130,11 @@ main.preview .button {
   align-self: flex-end;
   border-radius: var(--s0);
   text-align: right;
-  color: white;
-  background: var(--pink);
+  color: var(--textColor);
+  background: var(--color2);
   margin-top: var(--s-3);
   margin-right: var(--s-3);
+  margin-left: var(--s-1);
 }
 
 .chat-input{
@@ -148,6 +158,11 @@ main.preview .button {
   background: #eee;
 }
 
+.previewVideo .loading-indicator {
+  position:  absolute;
+  top: 50%;
+  left: 50%;
+}
 .previewVideo.hide {
   display: none;
 }
@@ -157,7 +172,7 @@ main.preview .button {
 
 .videoEditor .handle , .chat .handle{
   height: 20px;
-  background: var(--green);
+  background: var(--color1);
   border-bottom: 1px solid var(--black);
 }
 .videoEditor .pause {
@@ -185,8 +200,8 @@ main.preview .button {
   height: var(--s0);
   width: var(--s0);
   border-radius: 50%;
-  background: var(--pink);
-  box-shadow: 0px 0px 12px var(--pink);
+  background: var(--color2);
+  box-shadow: 0px 0px 12px var(--color2);
   z-index: 999;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -196,17 +211,24 @@ main.preview .button {
   border-radius: var(--s-1);
   padding: var(--s-2);
   cursor: pointer;
-  background: var(--yellow);
+  background: var(--color3);
   border: 1px solid var(--black);
+  color: var(--textColor)
 }
 .button:hover {
-  background: lightgoldenrodyellow;
+  background: var(--color2);
 }
 .mute {
   position: fixed;
   z-index: 99998;
   top: var(--s-1);
   right: var(--s-1); 
+}
+.background.button {
+  position:  fixed;
+  z-index: 9998;
+  top: var(--s-1);
+  right: 120px;
 }
 
 
@@ -222,8 +244,8 @@ main.preview .button {
 .desktopFile video {
   width: 100%;
   position: absolute;
-  box-shadow: 0px 0px 5px var(--green);
-  border: 1px solid var(--green);
+  box-shadow: 0px 0px 5px var(--color1);
+  border: 1px solid var(--color1);
 }
 
 
@@ -254,14 +276,14 @@ main.preview .button {
   left: -60%;
 }
 .videoDropZone:hover  {
-  background: var(--yellow);  
+  background: var(--color3);  
 }
 .videoDropZone.hasVideo:hover img {
   opacity: 0.2;
 }
 .videoDropZone:hover .caption {
-  color: black;
-  background-color: var(--yellow);
+  color: var(--textColor);
+  background-color: var(--color3);
 }
 
 
@@ -299,14 +321,14 @@ main.preview .button {
   pointer-events: none;
   opacity: 0.5;
   cursor: grabbing;
-  background: var(--yellow)
+  background: var(--color3)
 }
 
 .desktopFile.react-draggable-dragging img {
-  border: 1px solid yellow;
-  box-shadow: 0px 0px 12px yellow;
+  border: 1px solid var(--color2);
+  box-shadow: 0px 0px 12px var(--color2);
 }
 .desktopFile:hover img {
-  box-shadow: 0px 0px 5px var(--green);
-  border: 1px solid var(--green);
+  box-shadow: 0px 0px 5px var(--color1);
+  border: 1px solid var(--color1);
 }
