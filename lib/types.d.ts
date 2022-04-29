@@ -1,6 +1,7 @@
 interface Video {
   id: string;
-  imageSrc: string;
+  pngSrc: string;
+  webpSrc: string;
   videoSrc: string;
 }
 type VideoList = Video[];

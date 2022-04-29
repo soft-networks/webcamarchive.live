@@ -66,7 +66,7 @@ const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dr
       style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden"}}
     >
       <div className="caption videoNumber"> {dropZonenumber + 1}</div>
-      {video !== undefined ? <img className="poster" src={video.imageSrc} alt={`Thumbnail for ${video.id}`} /> : ""}
+      {video !== undefined ? <img className="poster" src={video.webpSrc} alt={`Thumbnail for ${video.id}`} /> : ""}
     </div>
   );
 };
