@@ -1,16 +1,28 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import ChatAndVideo from "../components/layouts/ChatAndVideo";
+import PasswordGate from "../components/PasswordGate";
 
+export async function getStaticProps() {
+  return {
+    props: {passcode: process.env.PASSCODE},
+  };
+}
 
-const Home: NextPage = () => {
+interface HomeProps {
+  passcode: string;
+}
+  
+const Home: NextPage<HomeProps> = (props) => {
   return (
     <div>
       <Head>
         <title> molly editor </title>
       </Head>
       <main className="padded">
+        <PasswordGate passcode={props.passcode}>
           <ChatAndVideo/>
+        </PasswordGate>
       </main>
     </div>
   );

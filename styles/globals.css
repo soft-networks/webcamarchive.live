@@ -68,7 +68,7 @@ main.preview .button {
   position: relative;
 }
 
-.loading-overlay {
+.loading-overlay, .password-overlay {
   position: absolute;
   top: 0;
   left: 0;
