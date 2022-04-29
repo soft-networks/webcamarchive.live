@@ -56,6 +56,7 @@ a {
   left: var(--s-1);
 }
 
+
 main.preview .button {
   background: var(--lightGray);
   color: var(--gray);
@@ -99,6 +100,13 @@ main.preview .button {
   width: var(--editorWidth);
   border: 1px solid var(--black);
   box-shadow: 0px 0px 30px var(--editorColor);
+}
+
+#stream {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 999999;
 }
 
 .chat {
@@ -170,7 +178,7 @@ main.preview .button {
   width: 100%;
 }
 
-.videoEditor .handle , .chat .handle{
+.handle {
   height: 20px;
   background: var(--color1);
   border-bottom: 1px solid var(--black);

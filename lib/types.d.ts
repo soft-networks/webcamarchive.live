@@ -12,3 +12,9 @@ interface Message {
   text: string
 }
 
+declare module 'react-twitch-embed' {
+  export class TwitchPlayer extends React.Component<any, any> {
+    
+  }
+}
+
