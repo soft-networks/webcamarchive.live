@@ -11,7 +11,7 @@ const MergedVideoPlayer: React.FC<MergedVideoPlayerProps> = ({ videoNumber }) =>
   const { mergedVideoList } = useMergedVideo();
   
   return (
-    <div>
+    <div className="videoPlayer">
       {mergedVideoList.map((videoID, index) => {
         let video = videoID ? videoInfo.getVideoById(videoID) : undefined;
         return <IndividualMergedVideoPlayer key={index} video={video} playing={index === videoNumber} />;

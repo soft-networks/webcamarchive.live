@@ -22,6 +22,7 @@
   --color2: hotpink;
   --color3: yellow;
   --lightGray: #eee;
+  --black: black;
   --gray: gray;
   --darkGray: #333;
   --bgURL: url('https://storage.googleapis.com/molly-archive/backgrounds/BG9.gif')
@@ -41,7 +42,7 @@ a {
 }
 
 
-.backgroundHolder {
+main {
   background-image: var(--bgURL);
   background-size: auto;
 }
@@ -69,6 +70,56 @@ main.preview .button {
   position: relative;
 }
 
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+.stack > * + * {
+  margin-top: var(--s-2);
+}
+.horizontal-stack {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.horizontal-stack > * + * {
+  margin-left: var(--s-2);
+}
+
+.app {
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0px 0px var(--s0) var(--color1);
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  
+}
+.app .handle {
+  height: 24px;
+  background: var(--color1);
+  border-bottom: 1px solid var(--black);
+  cursor: move;
+}
+
+.app .handle .icon {
+  position: absolute;
+  display: inline-block;
+  left: var(--s-3);
+}
+.app .handle .icon::before {
+  content: url('/icons/drag.svg');
+}
+.app .handle .title {
+  font-size: var(--s-1);
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding-top: 4px;
+}
+
 .loading-overlay, .password-overlay {
   position: absolute;
   top: 0;
@@ -86,83 +137,107 @@ main.preview .button {
   overflow: hidden;
 }
 .caption {
-  font-size: var(--s-1);
+  font-size: var(--s-2);
 }
 
-.videoEditor {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
+#videoEditor {
   top: 30%;
-  left: 30%;
-  --editorWidth: min(50vw, 540px);
-  --editorColor: var(--color1);
+  left: 40%;
+  --editorWidth:  min(50vw, 540px);
   width: var(--editorWidth);
-  border: 1px solid var(--black);
-  box-shadow: 0px 0px 30px var(--editorColor);
 }
 
 #stream {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 999999;
+  top: 10%;
+  left: calc( 25% +  min(50vw, 540px));
+}
+#chat {
+  top: 20%;
+  left: 12%;
+  width: min(20vw, 250px);
 }
 
-.chat {
-  background: white;
-  position: absolute;
-  display: flex;
-  flex-direction:  column;
-  left: 10%;
-  right: 10%;
-  width: calc(19% + 2 * var(--s-1));
-  min-width: calc(15ch + 2 * var(--s-1));
-  z-index: 99999;
-  border: 1px solid var(--black);
-  box-shadow: 0px 0px 12px var(--color1);
-}
-.chat .message {
-  
-  padding: var(--s-1);
-  box-sizing: border-box;
-}
-.chat .chat-messages {
-  display: flex;
-  flex-direction: column;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-bottom: var(--s-3);
-}
-.chat-messages .message {
-  align-self: flex-end;
-  border-radius: var(--s0);
-  text-align: right;
-  color: var(--textColor);
-  background: var(--color2);
-  margin-top: var(--s-3);
-  margin-right: var(--s-3);
-  margin-left: var(--s-1);
-}
 
 .chat-input{
-  background: var(--lightGray);
-  margin-bottom: var(--s-2);
-  border-bottom: 1px solid var(--darkGray);
-}
-.chat-input input{
+  background: white;
+  border-bottom: 1px solid var(--black);
   padding: var(--s-3);
-  margin-bottom: var(--s-3);
+  
 }
+.chat-input > * {
+  align-self: flex-start;
+}
+.chat-input > .text-input {
+  width: 100%;
+  flex: 1;
+}
+.text-input > .user-input {
+  width: 10ch;
+  padding: var(--s-1);
+}
+.text-input > .message-input {
+  margin-top: var(--s-3);
+  padding: var(--s-2);
+  font-size: var(--s-1);
+}
+
+.chat-input > .button {
+  padding: 0;
+  vertical-align: middle;
+  padding: var(--s-3) var(--s-4);
+  align-self: flex-end;
+}
+
+.chat-input > .button img {
+  width: var(--s0);
+  height: var(--s0);
+}
+
+
+
 .chat-input .button {
   display: inline-block;
 }
 
 
+#chat .chat-messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: var(--s-3);
+  background:  var(--lightGray);
+  
+}
+
+.chat-messages .message {
+  align-self: flex-start;
+  border-radius: var(--s-3);
+  text-align: left;
+  color: var(--textColor);
+  background: var(--color3); 
+  padding: var(--s-2);
+  margin-top: var(--s-2);
+  border: 1px solid var(--black);
+  font-size: var(--s-1);
+}
+.chat-messages .message:first-child { 
+  margin-top: 0;
+}
+
+/* VIDEO EDITOR */
+
+/* The entire player */
+.videoPlayer {
+  overflow: hidden;
+  border-bottom: 2px solid black;
+}
+
+
 .previewVideo {
-  width: 100%;
+  width: calc(100% + 1px);
   display: block;
-  height: calc(var(--editorWidth) / 1.5 - 2px); 
+  height: calc(var(--editorWidth) / 1.505); 
   background: #eee;
 }
 
@@ -177,55 +252,97 @@ main.preview .button {
 .previewVideo video {
   width: 100%;
 }
+/* Timeline */
 
-.handle {
-  height: 20px;
-  background: var(--color1);
-  border-bottom: 1px solid var(--black);
-}
-.videoEditor .pause {
-  position: absolute;
-  top: 3px;
-  right: var(--s-3);
-  z-index: 999;
-}
+/* The cursor */
 .videoTimelineContainer {
-  height: 92px;
-  position: relative;
-}
-.videoTimeline {
-  height: 100px;
-  display: flex;
-  width: 100%;
-  padding: 0px 0px;
-  background: var(--black);
-  height: 100%;
-  
+  height: var(--s4);
 }
 
 .timelineCursor {
-  width: 3px;
-  height: var(--s0);
-  width: var(--s0);
-  border-radius: 50%;
   background: var(--color2);
-  box-shadow: 0px 0px 12px var(--color2);
-  z-index: 999;
+  z-index: 2;
   position: absolute;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+  border: 1px solid var(--black);
+  padding: 4px;
+  padding-bottom: 2px;
+  border-radius: 50%;
 }
+
+.timelineCursor:hover {
+  background: var(--color1);
+}
+.timelineCursor img {
+  width: var(--s0);
+}
+
+
+.videoTimeline {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.videoTimelineThumb {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  cursor: default;
+  background: var(--color1);
+}
+
+.videoTimelineThumb .poster {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;  
+}
+.videoTimelineThumb .poster img {
+  height: 100%;
+  width: auto;
+  position: absolute;
+  top: 0%;
+  right: -40%;
+}
+
+
+
+.videoTimelineThumb > div {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.videoDropZone .caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  border-top: 1px solid black;
+  background: var(--color2);
+}
+
+.videoTimelineThumb:hover .poster img {
+  opacity: 0.5;
+}
+.videoTimelineThumb:hover .caption {
+  background: var(--color1);
+}
+
 
 .button {
   border-radius: var(--s-1);
   padding: var(--s-2);
   cursor: pointer;
-  background: var(--color3);
+  background: var(--color2);
   border: 1px solid var(--black);
   color: var(--textColor)
 }
-.button:hover {
-  background: var(--color2);
+.button:hover , .button:focus{
+  background: var(--color1);
 }
+
+/* TODO : FIX THESE */
 .mute {
   position: fixed;
   z-index: 99998;
@@ -266,33 +383,7 @@ main.preview .button {
   text-shadow: 0px 0px 5px var(--gray);
 }
 
-.videoDropZone {
-  
-}
-.videoDropZone .caption {
-  color: white;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  z-index: 1;
-}
-.videoDropZone .poster {
-  height: 100%;
-  position:absolute;
-  z-index: 0;
-  left: -60%;
-}
-.videoDropZone:hover  {
-  background: var(--color3);  
-}
-.videoDropZone.hasVideo:hover img {
-  opacity: 0.2;
-}
-.videoDropZone:hover .caption {
-  color: var(--textColor);
-  background-color: var(--color3);
-}
+
 
 
 .noselect {
@@ -318,9 +409,7 @@ main.preview .button {
 .react-draggable-dragging {
   z-index: 9999;
 }
-.handle {
-  cursor: move;
-}
+
 .desktopFile.react-draggable  {
   cursor: grab;
   

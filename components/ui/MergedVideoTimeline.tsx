@@ -5,24 +5,17 @@ import videoInfo from "../../lib/videoInfo";
 import { useCallback } from "react";
 import useVideoDragStore from "../../stores/VideoDragStore";
 
-interface VideoTimelineProps {
-  videoNumber: number;
-  sliderPos: number;
-}
 
-const VideoTimeline: React.FC<VideoTimelineProps> = ({ videoNumber, sliderPos }) => {
-  const generateDropZones = () => {
+const VideoTimeline: React.FC = ({ }) => {
+  const generateDropZones = useCallback( () => {
     let dropZones = [];
     for (let i = 0; i < NUM_VIDEO; i++) {
       dropZones.push(<VideoDropZone key={i} dropZoneNumber={i} />);
     }
     return dropZones;
-  };
+  }, []);
   return (
-    <div className="videoTimelineContainer"> 
-      <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor"></div>
       <div className="videoTimeline">{generateDropZones()}</div>
-    </div>
   );
 };
 
@@ -46,7 +39,7 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   }
 
   return (
-    <div style={{ width: 1000 / NUM_VIDEO + "%", height: "100%" }} onMouseUp={() => dropped()}>
+    <div className="videoTimelineThumb" onMouseUp={() => dropped()}>
       <VideoEditorThumbnail videoID={mergedVideoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />
     </div>
   );
@@ -63,10 +56,12 @@ const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dr
   return (
     <div
       className={classnames({ videoDropZone: true, hasVideo: video !== undefined })}
-      style={{ height: "100%", width: "100%", position: "relative", overflow: "hidden"}}
     >
       <div className="caption videoNumber"> {dropZonenumber + 1}</div>
-      {video !== undefined ? <img className="poster" src={video.webpSrc} alt={`Thumbnail for ${video.id}`} /> : ""}
+      { video && <div className="poster">
+      <img  src={video.pngSrc} alt="Thumbnail for video" />
+      </div>
+       }
     </div>
   );
 };

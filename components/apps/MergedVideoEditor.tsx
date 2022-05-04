@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useRef, useState } from "react";
 import MergedVideoProvider, { NUM_VIDEO, useMergedVideo, VIDEO_LENGTH } from "../../providers/MergedVideoProvider";
 import MergedVideoPlayer from "../ui/MergedVideoViewer";
@@ -36,12 +37,19 @@ const MergedVideoEditor : React.FC = () => {
 
   return (
     loaded ? <DragWrapper handle=".handle" nodeRef={myRef} dragID={"EDITOR"}>
-      <div className="videoEditor" ref={myRef}>
-        <div className="handle"> •••</div>
-        <div onClick={ () => setPause(!pause)} className="pause button"> {pause ? "unpause" : "pause" } </div>
+      <div id="videoEditor" className="app" ref={myRef}>
+        <div className="handle">
+          <div className="icon"></div>
+          <div className="title">Movie on 06-03-22 at 1.00 PM</div>
+        </div>
         <MergedVideoProvider>
          <MergedVideoPlayer videoNumber={videoNumber} />
-          <VideoTimeline videoNumber={pause ?  100 : videoNumber} sliderPos={sliderPos}/>
+         <div className="videoTimelineContainer"> 
+          <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor" onClick={() => setPause(!pause)}>
+            {pause ?   <img src="/icons/play.png" alt="play icon"/> : <img src="/icons/pause.png" alt="pause-icon"/>} 
+          </div>
+            <VideoTimeline/>
+          </div>
         </MergedVideoProvider>
       </div>
     </DragWrapper> : null

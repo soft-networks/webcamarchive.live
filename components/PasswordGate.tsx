@@ -5,6 +5,8 @@ interface PasswordGateProps {
 }
 
 const PasswordGate: React.FC<PasswordGateProps> = ({ children, passcode }) => {
+
+
   const [password, setPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isWrong, setIsWrong] = useState(false);

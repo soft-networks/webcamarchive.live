@@ -5,7 +5,7 @@ const Desktop: React.FunctionComponent = () => {
   const desktopVideoIDs = videoInfo.getAllIDs();
 
   return (
-    <div className="fullBleed hideOverflow backgroundHolder" >
+    <div className="fullBleed hideOverflow " >
       {desktopVideoIDs.map((vid) => (
         <DesktopVideoFile key={vid + "-thumb"} id={vid}/>
       ))}
