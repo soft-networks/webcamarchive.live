@@ -46,7 +46,7 @@ const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideo
       {!videoLoaded && <div className="loading-indicator">Loading...</div>}
       {video ? (
         <video
-          muted={muteVideo || video === undefined}
+          muted={muteVideo || !playing || video === undefined}
           ref={videoPlayerRef}
           poster={""}
           preload={"auto"}

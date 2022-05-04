@@ -18,10 +18,12 @@ const db = getDatabase(app);
 // Constants
 const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
-const messageListRef = ref(db, `${DB_ROOT}/messageList`);
 const dragSyncRef = ref(db, `${DB_ROOT}/dragSync`);
 let firstMessageRead = true
 
+const getChatRoomRef = (chatRoom:string) => {
+  return ref(db, `${DB_ROOT}/${chatRoom}`);
+}
 
 export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
   onValue(mergedVideoRef, (snapshot) => {
@@ -39,8 +41,8 @@ export const setMergedVideoDB = (position: number, id: string) => {
   set(specificVideoRef, id);
 }
 
-export const addMessageToDB = (message: Message) => {
-  const newMessageRef = push(messageListRef);
+export const addMessageToDB = (chatRoom: string, message: Message) => {
+  const newMessageRef = push(getChatRoomRef(chatRoom));
   set(newMessageRef, message);
 }
 
@@ -48,11 +50,10 @@ export const addMessageToDB = (message: Message) => {
 //   firstMessageRead = true;
 // })
 
-export const messageAddedToDB = (callback: (message: Message) => void) => {
+export const messageAddedToDB = (chatRoom: string, callback: (message: Message) => void) => {
 
   
-
-  onChildAdded(messageListRef, (data) => {
+  onChildAdded(getChatRoomRef(chatRoom), (data) => {
     if (!firstMessageRead) return;
     let val = data.val();
     if (val && val.username && val.text) {
@@ -61,8 +62,8 @@ export const messageAddedToDB = (callback: (message: Message) => void) => {
   });
 }
 
-export const disableMessageAddedToDB = () => {
-  off(messageListRef);
+export const disableMessageAddedToDB = (chatRoom: string) => {
+  off(getChatRoomRef(chatRoom));
 }
 
 export const setupDragSync = (dragSyncCallback: (dragSyncs: {[key: string]: {top: number, left: number}})=>void ) => {

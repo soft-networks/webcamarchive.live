@@ -67,7 +67,7 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
             key={`img-${video.id}`}
           >
             <source srcSet={video.webpSrc} type="image/webp" />
-            <img src={video.webpSrc} alt={`Thumbnail for ${video.id}`} />
+            <img src={video.pngSrc} alt={`Thumbnail for ${video.id}`} />
           </picture>
 
           <div>

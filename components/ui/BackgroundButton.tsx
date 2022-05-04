@@ -6,7 +6,7 @@ import { getBackgroundList, getNumBackgrounds } from "../../lib/backgroundData";
 const BackgroundButton: React.FC = () => {
 
   const backgrounds = useRef<{file: string, colors: string[], dark?: boolean}[]>(getBackgroundList());
-  const [bg, setBg] = useState<number>(0);
+  const [bg, setBg] = useState<number>();
   
   useEffect(() => {
     randomBG();
@@ -16,6 +16,9 @@ const BackgroundButton: React.FC = () => {
     setBg(bg);
   }
   useEffect(() => {
+    if (!bg) 
+      return;
+
     let background = backgrounds.current[bg];
     document.documentElement.style.setProperty('--bgURL', `url(${background.file})`);
     document.documentElement.style.setProperty('--color1', background.colors[0]);
@@ -37,8 +40,8 @@ const BackgroundButton: React.FC = () => {
 
   }, [bg]);
   return (
-    <div className="background button" onClick={randomBG}>
-      Change bg
+    <div className="button" onClick={randomBG}>
+      Change background
     </div>
   )
 }

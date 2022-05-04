@@ -1,9 +1,10 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import ChatAndVideo from "../components/layouts/ChatAndVideo";
+import FullExperience from "../components/layouts/FullExperience";
 import PasswordGate from "../components/PasswordGate";
 import { InferGetStaticPropsType } from 'next'
 import BackgroundButton from "../components/ui/BackgroundButton";
+import Chat from "../components/apps/Chat";
 
 export async function getStaticProps() {
   return {
@@ -21,9 +22,9 @@ const Home: NextPage<HomeProps> = (props) => {
       <Head>
         <title> molly editor </title>
       </Head>
-      <main className="padded">
-        <PasswordGate passcode={props.passcode}>
-          <ChatAndVideo/>
+      <main className="fullBleed">
+        <PasswordGate passcode={props.passcode} waitingRoom={<Chat chatRoom="waiting" roomName="Waiting room" />}>
+          <FullExperience />
         </PasswordGate>
       </main>
     </div>

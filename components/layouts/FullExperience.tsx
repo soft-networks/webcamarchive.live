@@ -1,16 +1,18 @@
 import Chat from "../apps/Chat";
 import VideoExperience from "./VideoExperience";
 import Stream from "../apps/Stream";
+import Settings from "../apps/Settings";
 
-const ChatAndVideo = () => {
+const FullExperience = () => {
   return (
     <>
-      <Chat />
+      <Chat chatRoom="editors" roomName="Editors" />
       <VideoExperience />
       <Stream/>
+      <Settings/>
     </>
   );
 };
 
 
-export default ChatAndVideo;
+export default FullExperience;

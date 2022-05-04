@@ -8,8 +8,8 @@ const MuteButton = () => {
     const toggleMuteVideo = useMuteVideoStore(state => state.toggleMuteVideo);
 
     return (
-        <div className={"mute button"} onClick={toggleMuteVideo}>
-          {muteVideo ? "play sound" : "mute sound"}
+        <div className={"button"} onClick={toggleMuteVideo}>
+          {muteVideo ? "Enable sound" : "Disable sound"}
         </div>
     );
 

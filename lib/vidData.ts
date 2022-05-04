@@ -249,8 +249,8 @@ export function getAllVideoList() {
     const encoded = encodeURIComponent(v);
     return {
       id: v,
-      pngSrc: `${root}${encoded}.webp`,
-      webpSrc: `${root}${encoded}.png`,
+      pngSrc: `${root}${encoded}.png`,
+      webpSrc: `${root}${encoded}.webp`,
       videoSrc: `${root}${encoded}.mp4`,
     };
   });

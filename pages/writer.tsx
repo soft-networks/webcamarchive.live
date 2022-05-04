@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import ChatAndVideo from "../components/layouts/ChatAndVideo";
+import FullExperience from "../components/layouts/FullExperience";
 import PasswordGate from "../components/PasswordGate";
 
 
@@ -22,10 +22,11 @@ const Writer: NextPage<WriterProps> = (props) => {
       <Head>
         <title> molly editor writer </title>
       </Head>
-      <main className="padded ">
+      <main className="fullBleed ">
         <PasswordGate passcode={props.passcode}>
           <div id="preview-message" className="button"> 🌱 writing mode </div>
-          <ChatAndVideo/>
+          <FullExperience/>
+
         </PasswordGate>
       </main>
     </div>

@@ -70,6 +70,10 @@ main.preview .button {
   position: relative;
 }
 
+.padded {
+  padding: var(--s-1);
+}
+
 
 .stack {
   display: flex;
@@ -77,6 +81,9 @@ main.preview .button {
 }
 .stack > * + * {
   margin-top: var(--s-2);
+}
+.stack .align-end {
+  align-self: end;
 }
 .horizontal-stack {
   display: flex;
@@ -90,7 +97,7 @@ main.preview .button {
 
 .app {
   position: absolute;
-  z-index: 100;
+  z-index: 10;
   box-shadow: 0px 0px var(--s0) var(--color1);
   border: 1px solid black;
   display: flex;
@@ -120,19 +127,7 @@ main.preview .button {
   padding-top: 4px;
 }
 
-.loading-overlay, .password-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(2px);
-  z-index: 999999;
-}
-.loading-overlay div {
-  white-space: pre;
-  text-align: center;
-  padding-top: 30vh;
-}
+
 .hideOverflow {
   overflow: hidden;
 }
@@ -145,19 +140,49 @@ main.preview .button {
   left: 40%;
   --editorWidth:  min(50vw, 540px);
   width: var(--editorWidth);
+  z-index: 11;
 }
 
 #stream {
   top: 10%;
   left: calc( 25% +  min(50vw, 540px));
 }
+#loader {
+  top: 50%;
+  left: 50%;
+  background: var(--lightGray);
+  font-size: var(--s1);
+
+}
 #chat {
   top: 20%;
   left: 12%;
   width: min(20vw, 250px);
+  z-index: 9;
 }
-
-
+#settings {
+  top: calc(100% - 100px);
+  left: 45%;
+  display: flex;
+  background: var(--lightGray);
+}
+#password{
+  top: 30%;
+  left: 40%;
+  background: var(--lightGray);
+}
+input {
+  border: 1px solid gray;
+}
+*:focus {
+  outline-color: var(--color2);
+}
+.loading-scrim {
+  /* background: rgba(255,255,255,0.3); */
+  position: absolute;
+  background: rgba(255,255,255,0.5);
+  z-index: 2;
+}
 .chat-input{
   background: white;
   border-bottom: 1px solid var(--black);
@@ -230,7 +255,7 @@ main.preview .button {
 /* The entire player */
 .videoPlayer {
   overflow: hidden;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black;
 }
 
 
@@ -288,8 +313,12 @@ main.preview .button {
   height: 100%;
   flex: 1;
   overflow: hidden;
-  cursor: default;
+  cursor: pointer;
   background: var(--color1);
+  border-right: 1px solid black
+}
+.videoTimelineThumb:last-child{
+  border-right: none;
 }
 
 .videoTimelineThumb .poster {
@@ -342,25 +371,12 @@ main.preview .button {
   background: var(--color1);
 }
 
-/* TODO : FIX THESE */
-.mute {
-  position: fixed;
-  z-index: 99998;
-  top: var(--s-1);
-  right: var(--s-1); 
-}
-.background.button {
-  position:  fixed;
-  z-index: 9998;
-  top: var(--s-1);
-  right: 120px;
-}
-
 
 .desktopFile {
   width: 5%;
   max-width: 100px;
 }
+
 .desktopFile img {
   width: 100%;
   box-shadow: 0px 0px 5px var(--gray);
@@ -402,7 +418,6 @@ main.preview .button {
 
 
 .preview .react-draggable, .preview .react-draggable > *, .preview .button, .preview .desktopFile.react-draggable{
-  cursor: default;
   pointer-events: none;
 }
 
@@ -410,13 +425,17 @@ main.preview .button {
   z-index: 9999;
 }
 
+.react-draggable-dragging  * {
+  pointer-events: none;
+}
+
 .desktopFile.react-draggable  {
   cursor: grab;
   
 }
 .desktopFile.react-draggable-dragging {
-  pointer-events: none;
   opacity: 0.5;
+  cursor: pointer;
   cursor: grabbing;
   background: var(--color3)
 }
