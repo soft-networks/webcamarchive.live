@@ -14,6 +14,7 @@ const PasswordGate: React.FC<PasswordGateProps> = ({ children, passcode, waiting
       setIsOpen(true);
       return true;
     } else {
+      console.log("password failed");
       return false;
     }
   };
@@ -36,11 +37,12 @@ const PasswordDialog: React.FC<PasswordDialogProps> = ({ onSubmit }) => {
   const myRef = useRef<HTMLDivElement>(null);
 
   const submitPassword = () => {
-    setPassword("");
+    console.log("Submitting");
     if (!onSubmit(password)) {
       setIsWrong(true);
       setTimeout(() => setIsWrong(false), 1000);
-    }
+    } 
+    
   };
   return (
     <Draggable nodeRef={myRef}>
@@ -51,7 +53,7 @@ const PasswordDialog: React.FC<PasswordDialogProps> = ({ onSubmit }) => {
         </div>
         <div className="stack padded">
           <input tabIndex={10} className="padded" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password please?" />
-          <div onClick={() => submitPassword()} onKeyDown={e => e.key === 'Enter' && submitPassword()} className="button align-end" tabIndex={11}>
+          <div onClick={submitPassword} onKeyDown={e => e.key === 'Enter' && submitPassword()} className="button align-end" tabIndex={11}>
             submit
           </div>
           {isWrong && <div className="wrong"> wrong password </div>}

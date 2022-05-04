@@ -425,10 +425,6 @@ input {
   z-index: 9999;
 }
 
-.react-draggable-dragging  * {
-  pointer-events: none;
-}
-
 .desktopFile.react-draggable  {
   cursor: grab;
   
