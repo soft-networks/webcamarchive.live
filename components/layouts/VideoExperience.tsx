@@ -9,7 +9,6 @@ const VideoExperience = () => {
   return (
     <>
       <LoadingScreen />
-
       <Desktop />
       <MergedVideoEditor />
     </>

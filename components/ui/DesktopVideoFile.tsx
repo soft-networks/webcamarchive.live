@@ -12,18 +12,19 @@ import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 import useMuteVideoStore from "../../stores/MuteVideoStore";
 import useVideoDragStore from "../../stores/VideoDragStore";
 
-const DesktopVideoFile: React.FC<{ id: string }> = ({ id }) => {
+const DesktopVideoFile: React.FC<{ id: string , iP?: {x: number, y: number}}> = ({ id, iP }) => {
   const videoIsOnDesktop = useDesktopVideoStore(useCallback((state) => state.desktopVideos[id], [id]));
-  return videoIsOnDesktop ? <DesktopVideoFileInternal video={videoInfo.getVideoById(id)} /> : null;
+  return videoIsOnDesktop ? <DesktopVideoFileInternal video={videoInfo.getVideoById(id)} iP={iP} /> : null;
 };
 interface DesktopVideoFileInternalProps {
   video: Video;
+  iP?: {x: number, y: number}
 }
 
-const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ video }) => {
+const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ video, iP}) => {
   const nodeRef = useRef(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const initPos = useRef<{ x: number; y: number }>({ x: Math.random() * 90, y: Math.random() * 90 });
+  const initPos = useRef<{ x: number; y: number }>(iP || { x: Math.random() * 90, y: Math.random() * 90 });
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const muteVideo = useMuteVideoStore(useCallback((state) => state.muteVideo, []));

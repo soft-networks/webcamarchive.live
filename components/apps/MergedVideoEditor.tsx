@@ -24,7 +24,9 @@ const MergedVideoEditor : React.FC = () => {
   useEffect(() => {
     if (pageIsVisible == false) {
       setPause(true);
-    }
+    } else if (pageIsVisible == true) {
+      setPause(false);
+    } 
   }, [pageIsVisible])
   const updateTime = useCallback(() => {
     if (pause == false) {

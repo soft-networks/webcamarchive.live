@@ -418,8 +418,11 @@ input {
 .desktopFile:hover, .desktopFile.react-draggable-dragging {
   width: 10%;
   max-width: 132px;
+  z-index: 5;
 }
-
+.desktopFile.react-draggable-dragging {
+  z-index: 6;
+}
 .desktopFile img {
   width: 100%;
   box-shadow: 0px 0px 2px var(--gray);
@@ -481,4 +484,29 @@ input {
 .react-draggable-dragging {
   z-index: 9999;
   cursor: grabbing;
+}
+
+.reading-dragger .react-draggable {
+  transition: transform 0.5s;
+}
+
+/* Phone portrait */
+@media only screen and (max-width: 400px) {
+	/* Mobile related CSS goes here (400px and under) */
+
+  #chat {
+    top: 10%;
+    left: 10%;
+    width: 50%;
+    min-width: 50%;
+  }
+
+  #stream {
+    top: 60%;
+    left: 10%;
+  }
+  #password {
+    top: 60%;
+  }
+  
 }

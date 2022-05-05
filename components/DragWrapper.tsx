@@ -22,17 +22,17 @@ const DragWrapper: React.FC<DragWrapperProps> = (props) => {
 
 const ServerWriterDragWrapper: React.FC<DragWrapperProps> = (props) => {
   const { onStop, onStart, dragID } = props;
-
   
-  const onDrag = useCallback(
+  const stopAndSync = useCallback(
     (e: any, data: any) => {
+      if (onStop) onStop(e, data);
       syncDragWithID(dragID, data.x, data.y);
     },
-    [dragID]
+    [onStop, dragID]
   );
 
   return (
-    <Draggable {...props} onDrag={onDrag}>
+    <Draggable {...props} onStop={(e,d) => stopAndSync(e,d)}>
       {props.children}
     </Draggable>
   );
@@ -43,9 +43,11 @@ const ServerSyncedDragWrapper: React.FC<DragWrapperProps> = (props) => {
   const myDragInfo = useDragSyncForID(props.dragID);
   
   return (
-    <Draggable {...props} disabled position={myDragInfo ? {x: myDragInfo.top, y: myDragInfo.left} : undefined}>
-      {props.children}
-    </Draggable>
+    <div className="reading-dragger">
+      <Draggable {...props} disabled position={myDragInfo ? {x: myDragInfo.top, y: myDragInfo.left} : undefined} >
+        {props.children}
+      </Draggable>  
+    </div>
   );
 };
 
