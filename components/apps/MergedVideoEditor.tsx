@@ -5,6 +5,9 @@ import MergedVideoPlayer from "../ui/MergedVideoViewer";
 import VideoTimeline from "../ui/MergedVideoTimeline";
 import DragWrapper from "../DragWrapper";
 import useLoadingStore from "../../stores/ThumbnailLoadingStore";
+import useVideoDragStore from "../../stores/VideoDragStore";
+import { usePageVisibility } from 'react-page-visibility';
+
 
 const MergedVideoEditor : React.FC = () => {
 
@@ -14,7 +17,15 @@ const MergedVideoEditor : React.FC = () => {
   const elapsedTime = useRef<number>(0);
   const [pause, setPause] = useState(false);
   const loaded = useLoadingStore(state => state.loaded);
+  const amDraggingGlobal = useVideoDragStore(useCallback(state => state.amDraggingGlobal, []));
+  
+  const pageIsVisible = usePageVisibility();
 
+  useEffect(() => {
+    if (pageIsVisible == false) {
+      setPause(true);
+    }
+  }, [pageIsVisible])
   const updateTime = useCallback(() => {
     if (pause == false) {
       elapsedTime.current += 100;
@@ -45,9 +56,13 @@ const MergedVideoEditor : React.FC = () => {
         <MergedVideoProvider>
          <MergedVideoPlayer videoNumber={videoNumber} />
          <div className="videoTimelineContainer"> 
+        
           <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor" onClick={() => setPause(!pause)}>
             {pause ?   <img src="/icons/play.png" alt="play icon"/> : <img src="/icons/pause.png" alt="pause-icon"/>} 
           </div>
+          { amDraggingGlobal && <div className="videoTimelineGuide">
+            <span> drop video here!</span>
+          </div>}
             <VideoTimeline/>
           </div>
         </MergedVideoProvider>

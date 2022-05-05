@@ -15,7 +15,7 @@ const Stream = () => {
           <div className="title"> LIVE Webcam</div>
         </div>
         <div style={{width: "100%", height: "100%", background: "black"}}>
-          <TwitchPlayer channel="maya" width="100%" height="100%" hideControls muted={muted} />
+          <TwitchPlayer channel="is_she_real" width="100%" height="100%" hideControls muted={muted} />
         </div>
       </div>
     </DragWrapper>

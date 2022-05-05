@@ -48,6 +48,7 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
     <DragWrapper
       nodeRef={nodeRef}
       onStart={onDrag}
+      onStop={() => {setTimeout(() => setVideoBeingDragged(undefined), 100)}}
       dragID={slugify(video.id, { strict: true, remove: /[*+~.()'"!:@%]/g })}
     >
       <div
@@ -57,8 +58,14 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
         onMouseOver={() => setIsHovering(true)}
         onMouseOut={() => setIsHovering(false)}
       >
-        <div style={{ position: "relative" }} className={classNames({ noselect: true, noevents: true })}>
-          {isHovering ? <video src={video.videoSrc} muted={muteVideo} autoPlay loop poster={video.webpSrc} /> : ""}
+        <div style={{ position: "relative" }} className={classNames({ noselect: true, noevents: true , imageHolder: true})}>
+          { isHovering && <video
+            src={video.videoSrc}
+            muted={muteVideo}
+            autoPlay
+            loop
+            playsInline
+          />}
           <picture
             ref={imageRef}
             onLoad={() => {
@@ -69,9 +76,8 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
             <source srcSet={video.webpSrc} type="image/webp" />
             <img src={video.pngSrc} alt={`Thumbnail for ${video.id}`} />
           </picture>
-
           <div>
-            <div className="caption">{video.id}.mp4</div>
+            <div className="caption"> <span> {isHovering  ? video.id + ".mp4": video.id.substring(0,10) + "..."}</span></div>
           </div>
         </div>
       </div>

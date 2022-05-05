@@ -33,7 +33,7 @@ const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideo
   useEffect(() => {
     if (videoPlayerRef.current && videoLoaded) {
       if (playing) {
-          
+          videoPlayerRef.current.currentTime = 0;
           videoPlayerRef.current.play();
       } else {
         videoPlayerRef.current.pause();
@@ -48,11 +48,10 @@ const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideo
         <video
           muted={muteVideo || !playing || video === undefined}
           ref={videoPlayerRef}
-          poster={""}
-          preload={"auto"}
           onLoadedData={() => setVideoLoaded(true)}
-          playsInline
           src={video.videoSrc}
+          autoPlay={playing}
+          preload="auto"
         /> 
       ) : null}
     </div>

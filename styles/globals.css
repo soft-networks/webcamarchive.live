@@ -256,23 +256,27 @@ input {
 .videoPlayer {
   overflow: hidden;
   border-bottom: 1px solid black;
+  position: relative;
 }
 
-
-.previewVideo {
+.videoPlayer, .previewVideo {
   width: calc(100% + 1px);
-  display: block;
   height: calc(var(--editorWidth) / 1.505); 
+}
+.previewVideo {
+  display: block;
   background: #eee;
+  position: absolute;
+  opacity: 1;
 }
 
 .previewVideo .loading-indicator {
   position:  absolute;
-  top: 50%;
-  left: 50%;
+  top: 10%;
+  left: 43%;
 }
 .previewVideo.hide {
-  display: none;
+  opacity: 0;
 }
 .previewVideo video {
   width: 100%;
@@ -282,11 +286,31 @@ input {
 /* The cursor */
 .videoTimelineContainer {
   height: var(--s4);
+  position: relative;
+}
+
+.videoTimelineGuide {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: var(--color2);
+ opacity: 0.9;
+ z-index: 3;
+ display:flex;
+ justify-content: center;
+ align-content: center;
+ flex-direction: column;
+ text-align: center;
+}
+.videoTimelineContainer:hover .videoTimelineGuide {
+  display: none;
 }
 
 .timelineCursor {
   background: var(--color2);
-  z-index: 2;
+  z-index: 4;
   position: absolute;
   transform: translate(-50%, -50%);
   cursor: pointer;
@@ -351,10 +375,10 @@ input {
   background: var(--color2);
 }
 
-.videoTimelineThumb:hover .poster img {
+.videoTimelineThumb.isHovering .poster img {
   opacity: 0.5;
 }
-.videoTimelineThumb:hover .caption {
+.videoTimelineThumb.isHovering .caption {
   background: var(--color1);
 }
 
@@ -375,18 +399,50 @@ input {
 .desktopFile {
   width: 5%;
   max-width: 100px;
+  transition: width 0.5s;
+  overflow: hidden;
+}
+
+
+.desktopFile.react-draggable  {
+  cursor: grab;
+  
+}
+.desktopFile.react-draggable-dragging {
+  cursor: grabbing;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+
+.desktopFile:hover, .desktopFile.react-draggable-dragging {
+  width: 10%;
+  max-width: 132px;
 }
 
 .desktopFile img {
   width: 100%;
-  box-shadow: 0px 0px 5px var(--gray);
-  border: 1px solid var(--gray);
+  box-shadow: 0px 0px 2px var(--gray);
+  border: 1px solid var(--black);
 }
+
+.desktopFile:hover img {
+  box-shadow: 0px 0px 10px var(--color2);
+  border: 1px solid var(--color2);
+}
+.desktopFile:hover .caption span {
+  text-shadow: none;
+  background: var(--color2);
+}
+
 .desktopFile video {
   width: 100%;
   position: absolute;
-  box-shadow: 0px 0px 5px var(--color1);
-  border: 1px solid var(--color1);
+  z-index: 2;
+}
+.desktopFile video.hide {
+  display: none;
+  
 }
 
 
@@ -395,8 +451,9 @@ input {
   word-wrap: break-word;
   margin: 0 auto;
   text-align: center;
-  color: var(--darkGray);
-  text-shadow: 0px 0px 5px var(--gray);
+  color: black;
+  font-size: var(--s-1);
+  text-shadow: 0px 0px 5px white;
 }
 
 
@@ -423,24 +480,5 @@ input {
 
 .react-draggable-dragging {
   z-index: 9999;
-}
-
-.desktopFile.react-draggable  {
-  cursor: grab;
-  
-}
-.desktopFile.react-draggable-dragging {
-  opacity: 0.5;
-  cursor: pointer;
   cursor: grabbing;
-  background: var(--color3)
-}
-
-.desktopFile.react-draggable-dragging img {
-  border: 1px solid var(--color2);
-  box-shadow: 0px 0px 12px var(--color2);
-}
-.desktopFile:hover img {
-  box-shadow: 0px 0px 5px var(--color1);
-  border: 1px solid var(--color1);
 }

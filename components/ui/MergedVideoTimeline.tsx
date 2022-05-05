@@ -2,8 +2,9 @@
 import classnames from "classnames";
 import { NUM_VIDEO, useMergedVideo } from "../../providers/MergedVideoProvider";
 import videoInfo from "../../lib/videoInfo";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import useVideoDragStore from "../../stores/VideoDragStore";
+import classNames from "classnames";
 
 
 const VideoTimeline: React.FC = ({ }) => {
@@ -15,7 +16,9 @@ const VideoTimeline: React.FC = ({ }) => {
     return dropZones;
   }, []);
   return (
-      <div className="videoTimeline">{generateDropZones()}</div>
+      <div className="videoTimeline">
+        {generateDropZones()}
+      </div>
   );
 };
 
@@ -26,6 +29,7 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   const amDraggingGlobal = useVideoDragStore(useCallback(state => state.amDraggingGlobal, []));
   const videoBeingDragged = useVideoDragStore(useCallback(state => state.videoBeingDragged, []));
   const setVideoBeingDragged = useVideoDragStore(useCallback(state => state.setVideoBeingDragged, []));
+  const [isHover, setIsHover] = useState(false);
 
   const { mergeVideoAtIndex, mergedVideoList } = useMergedVideo();
 
@@ -39,7 +43,7 @@ const VideoDropZone: React.FC<VideoDropZoneProps> = ({ dropZoneNumber }) => {
   }
 
   return (
-    <div className="videoTimelineThumb" onMouseUp={() => dropped()}>
+    <div className={classNames({videoTimelineThumb: true, isHovering: isHover})} onMouseUp={() => dropped()} onMouseOver={e => setIsHover(true)} onMouseOut={e => setIsHover(false)}>
       <VideoEditorThumbnail videoID={mergedVideoList[dropZoneNumber]} dropZonenumber={dropZoneNumber} />
     </div>
   );
