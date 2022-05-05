@@ -58,14 +58,16 @@ const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dr
   const video = videoID ? videoInfo.getVideoById(videoID) : undefined;
 
   return (
-    <div
-      className={classnames({ videoDropZone: true, hasVideo: video !== undefined })}
-    >
+    <div className={classnames({ videoDropZone: true, hasVideo: video !== undefined })}>
       <div className="caption videoNumber"> {dropZonenumber + 1}</div>
-      { video && <div className="poster">
-      <img  src={video.pngSrc} alt="Thumbnail for video" />
-      </div>
-       }
+      {video && (
+        <div className="poster">
+          <picture>
+            <source srcSet={video.webpSrc} type="image/webp" />
+            <img src={video.pngSrc} alt={`Thumbnail for ${video.id}`} />
+          </picture>
+        </div>
+      )}
     </div>
   );
 };

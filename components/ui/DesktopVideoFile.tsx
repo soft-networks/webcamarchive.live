@@ -40,7 +40,7 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
   );
 
   useEffect(() => {
-    if (imageRef.current && imageRef.current.complete) {
+    if (imageRef.current && imageRef.current.complete) {      
       desktopFileLoaded();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,14 +68,14 @@ const DesktopVideoFileInternal: React.FC<DesktopVideoFileInternalProps> = ({ vid
             playsInline
           />}
           <picture
-            ref={imageRef}
+ 
             onLoad={() => {
               desktopFileLoaded();
             }}
             key={`img-${video.id}`}
           >
             <source srcSet={video.webpSrc} type="image/webp" />
-            <img src={video.pngSrc} alt={`Thumbnail for ${video.id}`} />
+            <img src={video.pngSrc} alt={`Thumbnail for ${video.id}`}            ref={imageRef}/>
           </picture>
           <div>
             <div className="caption"> <span> {isHovering  ? video.id + ".mp4": video.id.substring(0,10) + "..."}</span></div>
