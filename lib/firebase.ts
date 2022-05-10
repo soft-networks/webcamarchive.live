@@ -19,12 +19,24 @@ const db = getDatabase(app);
 const DB_ROOT = "MOLLYEDITOR-TESTING";
 const mergedVideoRef = ref(db, `${DB_ROOT}/mergedVideos`);
 const dragSyncRef = ref(db, `${DB_ROOT}/dragSync`);
+const streamIDRef = ref(db, `${DB_ROOT}/streamID`)
 let firstMessageRead = true
 
 const getChatRoomRef = (chatRoom:string) => {
   return ref(db, `${DB_ROOT}/${chatRoom}`);
 }
 
+
+export const syncStreamID = (setStreamID: (id?: string) => void) => {
+  onValue(streamIDRef, (snapshot) => {
+    let val = snapshot.val();
+    setStreamID(val);
+  })
+}
+
+export const disableStreamIDSync = () => {
+  off(streamIDRef);
+}
 export const syncMergedVideosDB = (setMergedVideos: (videoIDs: {[key:number]: string}) => void) => {
   onValue(mergedVideoRef, (snapshot) => {
     let val = snapshot.val();

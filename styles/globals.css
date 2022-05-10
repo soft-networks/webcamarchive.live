@@ -146,6 +146,12 @@ main.preview .button {
 #stream {
   top: 10%;
   left: calc( 25% +  min(50vw, 540px));
+  --streamWidth: min(25vw, 270px);
+  width: var(--streamWidth);
+  /* 1920 x 1080  */
+  height: calc(var(--streamWidth) / 1.52);  
+  overflow: hidden;
+
 }
 #loader {
   top: 50%;
@@ -245,6 +251,8 @@ input {
   margin-top: var(--s-2);
   border: 1px solid var(--black);
   font-size: var(--s-1);
+  max-width: 100%;
+  word-break: break-all;
 }
 .chat-messages .message:first-child { 
   margin-top: 0;

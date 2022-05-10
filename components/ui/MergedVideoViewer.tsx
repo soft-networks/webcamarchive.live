@@ -43,7 +43,7 @@ const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideo
   }, [playing, videoLoaded]);
   return (
     <div className={classnames({hide: !playing, previewVideo: true})} >
-      {!videoLoaded && <div className="loading-indicator">Loading...</div>}
+      {!videoLoaded && video && <div className="loading-indicator">Loading...</div>}
       {video ? (
         <video
           muted={muteVideo || !playing || video === undefined}
