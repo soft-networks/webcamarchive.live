@@ -20,7 +20,7 @@ const Home: NextPage<HomeProps> = (props) => {
   return (
     <div>
       <Head>
-        <title> webcamarchive.live </title>
+        <title>webcamarchive.live</title>
       </Head>
       <main className="fullBleed">
         <PasswordGate passcode={props.passcode} waitingRoom={<Chat chatRoom="waiting" roomName="Waiting room" />}>

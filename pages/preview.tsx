@@ -8,10 +8,10 @@ const Preview: NextPage = () => {
   return (
     <div>
       <Head>
-        <title> molly editor preview </title>
+        <title>webcamarchive preview</title>
       </Head>
       <main className="preview fullBleed">
-          <div id="preview-message" className="button"> 👀 view only </div>
+          <div id="preview-message" > 👀 view only </div>
           <DragSyncProvider>
             <FullExperience/>
           </DragSyncProvider>

@@ -20,7 +20,7 @@ const Writer: NextPage<WriterProps> = (props) => {
   return (
     <div>
       <Head>
-        <title> molly editor writer </title>
+        <title> webcam archive writer </title>
       </Head>
       <main className="fullBleed ">
         <PasswordGate passcode={props.passcode}>
