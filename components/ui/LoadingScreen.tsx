@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { createContext, useContext, useState } from "react";
 import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 const LoadingScreen = () => {
@@ -14,7 +15,9 @@ const LoadingDisplay = () => {
     </div>
     <div className="app" id="loader">
       <div className="handle">
-        <div className="icon"></div>
+        <div className="icon">
+          <img src="/icons/drag.svg" alt="drag window"/>
+        </div>
         <div className="title">Loading...</div>
       </div>
       <div className="padded" style={{minWidth: "20ch"}}>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRef } from "react";
 import DragWrapper from "../DragWrapper";
 import BackgroundButton from "../ui/BackgroundButton";
@@ -10,7 +11,9 @@ const Settings = () => {
     <DragWrapper handle=".handle" nodeRef={myRef} dragID="SETTINGS">
     <div className="app" id="settings" ref={myRef}>
       <div className="handle">
-        <div className="icon"></div>
+        <div className="icon">
+          <img src="/icons/drag.svg" alt="drag window"/>
+        </div>
         <div className="title">Settings</div>
       </div>
       <div className="horizontal-stack padded">

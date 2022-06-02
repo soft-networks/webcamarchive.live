@@ -45,6 +45,13 @@ a {
 main {
   background-image: var(--bgURL);
   background-size: auto;
+
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+image-rendering:   -o-crisp-edges;         /* Opera */
+image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+image-rendering: crisp-edges;
+-ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+
 }
 
 
@@ -107,17 +114,23 @@ main {
   background: var(--color1);
   border-bottom: 1px solid var(--black);
   cursor: move;
+  position: relative;
 }
 
 
 .app .handle .icon {
   position: absolute;
-  display: inline-block;
-  left: var(--s-3);
+  height: 24px;
+  padding: 4px;
 }
-.app .handle .icon::before {
-  content: url('/icons/drag.svg');
+
+.app .handle .icon img {
+  position: relative;
+  height: 100%;
+  width: auto;
+  user-select: none;
 }
+
 .app .handle .title {
   font-size: var(--s-1);
   height: 100%;
@@ -489,6 +502,10 @@ input {
 
 .preview .app .handle .icon {
   display: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
 }
 
 .preview .react-draggable .button {

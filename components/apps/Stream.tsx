@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { disableStreamIDSync, syncStreamID } from '../../lib/firebase';
@@ -19,7 +20,9 @@ const Stream = () => {
     <DragWrapper handle=".handle" dragID={'stream'} nodeRef={myRef} >
       <div id="stream" className="app" ref={myRef}>
         <div className="handle">
-          <div className="icon"></div>
+          <div className="icon">
+            <img src="/icons/drag.svg" alt="drag window"/>
+          </div>
           <div className="title"> LIVE Webcam</div>
         </div>
         <div style={{width: "100%", height: "100%", background: "black"}}>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ReactNode, useRef, useState } from "react";
 import Draggable from "react-draggable";
 
@@ -48,7 +49,9 @@ const PasswordDialog: React.FC<PasswordDialogProps> = ({ onSubmit }) => {
     <Draggable nodeRef={myRef}>
       <div className="password-overlay app" id="password" ref={myRef}>
         <div className="handle">
-          <div className="icon"> </div>
+          <div className="icon"> 
+            <img src="/icons/drag.svg" alt="drag window"/>
+          </div>
           <div className="title"> Ticket please </div>
         </div>
         <div className="stack padded">

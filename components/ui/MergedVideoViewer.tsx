@@ -6,15 +6,16 @@ import useMuteVideoStore from "../../stores/MuteVideoStore";
 
 interface MergedVideoPlayerProps {
   videoNumber: number;
+  localMuted?: boolean;
 }
-const MergedVideoPlayer: React.FC<MergedVideoPlayerProps> = ({ videoNumber }) => {
+const MergedVideoPlayer: React.FC<MergedVideoPlayerProps> = ({ videoNumber, localMuted }) => {
   const { mergedVideoList } = useMergedVideo();
   
   return (
     <div className="videoPlayer">
       {mergedVideoList.map((videoID, index) => {
         let video = videoID ? videoInfo.getVideoById(videoID) : undefined;
-        return <IndividualMergedVideoPlayer key={index} video={video} playing={index === videoNumber} />;
+        return <IndividualMergedVideoPlayer key={index} video={video} playing={index === videoNumber} localMuted={localMuted} />;
       })}
     </div>
   );
@@ -23,9 +24,10 @@ const MergedVideoPlayer: React.FC<MergedVideoPlayerProps> = ({ videoNumber }) =>
 interface IndividualMergedVideoPlayerProps {
   playing: boolean;
   video?: Video;
+  localMuted?: boolean;
 }
 
-const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideoPlayerProps> = ({ playing, video }) => {
+const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideoPlayerProps> = ({ playing, video, localMuted }) => {
   const videoPlayerRef = useRef<HTMLVideoElement | null>(null);
   const muteVideo = useMuteVideoStore( useCallback(state => state.muteVideo , [] ));
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
@@ -46,7 +48,7 @@ const IndividualMergedVideoPlayer: React.FunctionComponent<IndividualMergedVideo
       {!videoLoaded && video && <div className="loading-indicator">Loading...</div>}
       {video ? (
         <video
-          muted={muteVideo || !playing || video === undefined}
+          muted={localMuted || muteVideo || !playing || video === undefined}
           ref={videoPlayerRef}
           onLoadedData={() => setVideoLoaded(true)}
           src={video.videoSrc}

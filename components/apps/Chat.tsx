@@ -32,7 +32,9 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatRoom, roomName}) => {
     <DragWrapper handle=".handle" nodeRef={myRef} dragID="CHAT">
       <div className="app" id="chat" ref={myRef}>
         <div className="handle">
-          <div className="icon"></div>
+          <div className="icon">
+            <img src="/icons/drag.svg" alt="drag window"/>
+          </div>
           <div className="title">{roomName} chat</div>
         </div>
         <div className="chat-input horizontal-stack ">
@@ -56,7 +58,7 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatRoom, roomName}) => {
             />
           </div>
           <div className="button" onClick={sendCurrentMessage} onKeyDown={e => e.key === 'Enter' && sendCurrentMessage()}  tabIndex={3}>
-            <img src="/icons/arrow.png" alt="send message"  />
+            <img src="/icons/send.svg" alt="send message"  />
           </div>
         </div>
         <div className="chat-messages">

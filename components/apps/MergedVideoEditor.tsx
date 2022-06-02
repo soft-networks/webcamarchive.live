@@ -7,6 +7,7 @@ import DragWrapper from "../DragWrapper";
 import useLoadingStore from "../../stores/ThumbnailLoadingStore";
 import useVideoDragStore from "../../stores/VideoDragStore";
 import { usePageVisibility } from 'react-page-visibility';
+import useMuteVideoStore from "../../stores/MuteVideoStore";
 
 
 const MergedVideoEditor : React.FC = () => {
@@ -18,7 +19,8 @@ const MergedVideoEditor : React.FC = () => {
   const [pause, setPause] = useState(false);
   const loaded = useLoadingStore(state => state.loaded);
   const amDraggingGlobal = useVideoDragStore(useCallback(state => state.amDraggingGlobal, []));
-  
+  const [localMute, setLocalMute] = useState(false);
+  const muteVideo = useMuteVideoStore(useCallback(state => state.muteVideo, []));
   const pageIsVisible = usePageVisibility();
 
   useEffect(() => {
@@ -52,16 +54,20 @@ const MergedVideoEditor : React.FC = () => {
     loaded ? <DragWrapper handle=".handle" nodeRef={myRef} dragID={"EDITOR"}>
       <div id="videoEditor" className="app" ref={myRef}>
         <div className="handle">
-          <div className="icon"></div>
+          <div className="icon">
+            <img src="/icons/drag.svg" alt="drag window"/>
+          </div>
           <div className="title">Movie on 06-03-22 at 1.00 PM</div>
         </div>
         <MergedVideoProvider>
-         <MergedVideoPlayer videoNumber={videoNumber} />
+         <MergedVideoPlayer videoNumber={videoNumber} localMuted={localMute} />
          <div className="videoTimelineContainer"> 
-        
           <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor" onClick={() => setPause(!pause)}>
-            {pause ?   <img src="/icons/play.png" alt="play icon"/> : <img src="/icons/pause.png" alt="pause-icon"/>} 
+            {pause ?   <img src="/icons/play.svg" alt="play icon"/> : <img src="/icons/pause.svg" alt="pause icon"/>} 
           </div>
+          {!muteVideo && <div style={{ left: `50%`, top: '-32px' }} className="timelineCursor" onClick={() => setLocalMute(!localMute)}>
+            {!localMute ?   <img src="/icons/mute.svg" alt="mute icon"/> : <img src="/icons/unmute.svg" alt="unmute icon"/>} 
+          </div>}
           { amDraggingGlobal && <div className="videoTimelineGuide">
             <span> drop video here!</span>
           </div>}
