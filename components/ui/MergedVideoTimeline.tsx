@@ -2,7 +2,7 @@
 import classnames from "classnames";
 import { NUM_VIDEO, useMergedVideo } from "../../providers/MergedVideoProvider";
 import videoInfo from "../../lib/videoInfo";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useVideoDragStore from "../../stores/VideoDragStore";
 import classNames from "classnames";
 
@@ -56,9 +56,16 @@ interface VideoEditorThumbnailProps {
 
 const VideoEditorThumbnail: React.FC<VideoEditorThumbnailProps> = ({ videoID, dropZonenumber }) => {
   const video = videoID ? videoInfo.getVideoById(videoID) : undefined;
+  const [wasChanged, setWasChanged] = useState(false);
 
+  useEffect(() => {
+    setWasChanged(true);
+    setTimeout((() => setWasChanged(false)), 500);
+  }, [videoID])
+
+  
   return (
-    <div className={classnames({ videoDropZone: true, hasVideo: video !== undefined })}>
+    <div className={classnames({ videoDropZone: true, hasVideo: video !== undefined, flash: wasChanged })}>
       <div className="caption videoNumber"> {dropZonenumber + 1}</div>
       {video && (
         <div className="poster">

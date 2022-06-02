@@ -9,7 +9,8 @@ type VideoData = {[key:string]: Video}
 
 interface Message {
   username: string;
-  text: string
+  text: string;
+  timestamp: number;
 }
 
 declare module 'react-twitch-embed' {

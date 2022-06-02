@@ -17,6 +17,8 @@ const MergedVideoEditor : React.FC = () => {
   const myRef = useRef<HTMLDivElement>(null);
   const elapsedTime = useRef<number>(0);
   const [pause, setPause] = useState(false);
+  const [pausedLocally, setPausedLocally] = useState(false);
+
   const loaded = useLoadingStore(state => state.loaded);
   const amDraggingGlobal = useVideoDragStore(useCallback(state => state.amDraggingGlobal, []));
   const [localMute, setLocalMute] = useState(false);
@@ -27,9 +29,9 @@ const MergedVideoEditor : React.FC = () => {
     if (pageIsVisible == false) {
       setPause(true);
     } else if (pageIsVisible == true) {
-      setPause(false);
+      setPause(pausedLocally);
     } 
-  }, [pageIsVisible])
+  }, [pageIsVisible, pausedLocally])
   const updateTime = useCallback(() => {
     if (pause == false) {
       elapsedTime.current += 100;
@@ -50,33 +52,52 @@ const MergedVideoEditor : React.FC = () => {
   }, [updateTime]);
 
 
-  return (
-    loaded ? <DragWrapper handle=".handle" nodeRef={myRef} dragID={"EDITOR"}>
+  return loaded ? (
+    <DragWrapper handle=".handle" nodeRef={myRef} dragID={"EDITOR"}>
       <div id="videoEditor" className="app" ref={myRef}>
         <div className="handle">
           <div className="icon">
-            <img src="/icons/drag.svg" alt="drag window"/>
+            <img src="/icons/drag.svg" alt="drag window" />
           </div>
           <div className="title">Movie on 06-03-22 at 1.00 PM</div>
         </div>
         <MergedVideoProvider>
-         <MergedVideoPlayer videoNumber={videoNumber} localMuted={localMute} />
-         <div className="videoTimelineContainer"> 
-          <div style={{ left: `${sliderPos * 100}%` }} className="timelineCursor" onClick={() => setPause(!pause)}>
-            {pause ?   <img src="/icons/play.svg" alt="play icon"/> : <img src="/icons/pause.svg" alt="pause icon"/>} 
-          </div>
-          {!muteVideo && <div style={{ left: `50%`, top: '-32px' }} className="timelineCursor" onClick={() => setLocalMute(!localMute)}>
-            {!localMute ?   <img src="/icons/mute.svg" alt="mute icon"/> : <img src="/icons/unmute.svg" alt="unmute icon"/>} 
-          </div>}
-          { amDraggingGlobal && <div className="videoTimelineGuide">
-            <span> drop video here!</span>
-          </div>}
-            <VideoTimeline/>
+          <MergedVideoPlayer videoNumber={videoNumber} localMuted={localMute}/>
+          <div className="videoTimelineContainer">
+            <div
+              style={{ left: `${sliderPos * 100}%` }}
+              className="timelineCursor"
+              onClick={() => {
+                setPause(!pause);
+                setPausedLocally(!pausedLocally);
+              }}
+            >
+              {pause ? <img src="/icons/play.svg" alt="play icon" /> : <img src="/icons/pause.svg" alt="pause icon" />}
+            </div>
+            {!muteVideo && (
+              <div
+                style={{ left: `50%`, top: "-32px" }}
+                className="timelineCursor"
+                onClick={() => setLocalMute(!localMute)}
+              >
+                {!localMute ? (
+                  <img src="/icons/mute.svg" alt="mute icon" />
+                ) : (
+                  <img src="/icons/unmute.svg" alt="unmute icon" />
+                )}
+              </div>
+            )}
+            {amDraggingGlobal && (
+              <div className="videoTimelineGuide">
+                <span> drop video here!</span>
+              </div>
+            )}
+            <VideoTimeline />
           </div>
         </MergedVideoProvider>
       </div>
-    </DragWrapper> : null
-  );
+    </DragWrapper>
+  ) : null;
 };
 
 export default MergedVideoEditor;

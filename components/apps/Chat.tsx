@@ -16,13 +16,19 @@ const Chat: React.FunctionComponent<ChatProps> = ({ chatRoom, roomName}) => {
   const sendCurrentMessage = useCallback(() => {
     if (currentText.length > 0) {
       setCurrentText("");
-      addMessageToDB(chatRoom, { username: userName, text: currentText });
+      addMessageToDB(chatRoom, { username: userName, text: currentText, timestamp: Date.now() });
     } 
   }, [chatRoom, currentText, userName]);
 
   useEffect(() => {
     messageAddedToDB(chatRoom, (message: Message) => {
-      setMessageList((p) => [message, ...p]);
+
+
+      setMessageList((p) => {
+        const tempMessageList = [message, ...p];
+        tempMessageList.sort((a, b) => b.timestamp - a.timestamp);
+        return tempMessageList;
+      });
     });
     return () => disableMessageAddedToDB(chatRoom);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -69,7 +69,7 @@ export const messageAddedToDB = (chatRoom: string, callback: (message: Message) 
     if (!firstMessageRead) return;
     let val = data.val();
     if (val && val.username && val.text) {
-      callback({username: val.username, text: val.text});
+      callback({username: val.username, text: val.text, timestamp: val.timestamp || 0});
     }
   });
 }
