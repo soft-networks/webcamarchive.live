@@ -1,6 +1,6 @@
 :root {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
   --ratio: 1.4;
   --s0: 1em;
@@ -15,8 +15,8 @@
   --s-4: calc(var(--s-3) / var(--ratio));
   --s-5: calc(var(--s-4) / var(--ratio));
 
-  
-  
+
+
   --textColor: black;
   --color1: rgb(178, 247, 155);
   --color2: hotpink;
@@ -27,6 +27,7 @@
   --darkGray: #333;
   --bgURL: url('https://storage.googleapis.com/molly-archive/backgrounds/BG9.gif')
 }
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -46,11 +47,15 @@ main {
   background-image: var(--bgURL);
   background-size: auto;
 
-  image-rendering: -moz-crisp-edges;         /* Firefox */
-image-rendering:   -o-crisp-edges;         /* Opera */
-image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
-image-rendering: crisp-edges;
--ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+  image-rendering: -moz-crisp-edges;
+  /* Firefox */
+  image-rendering: -o-crisp-edges;
+  /* Opera */
+  image-rendering: -webkit-optimize-contrast;
+  /* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  /* IE (non-standard property) */
 
 }
 
@@ -84,19 +89,22 @@ image-rendering: crisp-edges;
   display: flex;
   flex-direction: column;
 }
-.stack > * + * {
+
+.stack>*+* {
   margin-top: var(--s-2);
 }
+
 .stack .align-end {
   align-self: end;
 }
+
 .horizontal-stack {
   display: flex;
   flex-direction: row;
 }
 
 
-.horizontal-stack > * + * {
+.horizontal-stack>*+* {
   margin-left: var(--s-2);
 }
 
@@ -107,8 +115,9 @@ image-rendering: crisp-edges;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
-  
+
 }
+
 .app .handle {
   height: 24px;
   background: var(--color1);
@@ -129,6 +138,13 @@ image-rendering: crisp-edges;
   height: 100%;
   width: auto;
   user-select: none;
+
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+
 }
 
 .app .handle .title {
@@ -143,6 +159,7 @@ image-rendering: crisp-edges;
 .hideOverflow {
   overflow: hidden;
 }
+
 .caption {
   font-size: var(--s-1);
 }
@@ -150,21 +167,22 @@ image-rendering: crisp-edges;
 #videoEditor {
   top: 30%;
   left: 40%;
-  --editorWidth:  min(50vw, 540px);
+  --editorWidth: min(50vw, 540px);
   width: var(--editorWidth);
   z-index: 11;
 }
 
 #stream {
   top: 10%;
-  left: calc( 25% +  min(50vw, 540px));
+  left: calc(25% + min(50vw, 540px));
   --streamWidth: max(22vw, 300px);
   width: var(--streamWidth);
   /* 1920 x 1080  */
-  height: calc(var(--streamWidth) / 1.52);  
+  height: calc(var(--streamWidth) / 1.52);
   overflow: hidden;
 
 }
+
 #loader {
   top: 50%;
   left: 50%;
@@ -172,6 +190,7 @@ image-rendering: crisp-edges;
   font-size: var(--s1);
 
 }
+
 #chat {
   top: 20%;
   left: 12%;
@@ -179,61 +198,71 @@ image-rendering: crisp-edges;
   min-width: 300px;
   z-index: 9;
 }
+
 #settings {
   top: calc(100% - 100px);
   left: 45%;
   display: flex;
   background: var(--lightGray);
 }
-#password{
+
+#password {
   top: 30%;
   left: 40%;
   background: var(--lightGray);
 }
+
 input {
   border: 1px solid gray;
 }
+
 *:focus {
   outline-color: var(--color2);
 }
+
 .loading-scrim {
   /* background: rgba(255,255,255,0.3); */
   position: absolute;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
   z-index: 2;
 }
-.chat-input{
+
+.chat-input {
   background: white;
   border-bottom: 1px solid var(--black);
   padding: var(--s-3);
-  
+
 }
-.chat-input > * {
+
+.chat-input>* {
   align-self: flex-start;
 }
-.chat-input > .text-input {
+
+.chat-input>.text-input {
   width: 100%;
   flex: 1;
   font-size: var(--s0);
 }
-.text-input > .user-input {
+
+.text-input>.user-input {
   width: 12ch;
   padding: var(--s-1);
 }
-.text-input > .message-input {
+
+.text-input>.message-input {
   margin-top: var(--s-3);
   padding: var(--s-2);
   font-size: var(--s0);
 }
 
-.chat-input > .button {
+.chat-input>.button {
   padding: 0;
   vertical-align: middle;
   padding: var(--s-3) var(--s-4);
   align-self: flex-end;
 }
 
-.chat-input > .button img {
+.chat-input>.button img {
   width: var(--s0);
   height: var(--s0);
 }
@@ -251,8 +280,8 @@ input {
   max-height: 200px;
   overflow-y: auto;
   padding: var(--s-3);
-  background:  var(--lightGray);
-  
+  background: var(--lightGray);
+
 }
 
 .chat-messages .message {
@@ -260,14 +289,15 @@ input {
   border-radius: var(--s-3);
   text-align: left;
   color: var(--textColor);
-  background: var(--color3); 
+  background: var(--color3);
   padding: var(--s-2);
   margin-top: var(--s-2);
   border: 1px solid var(--black);
   max-width: 100%;
   word-break: break-word;
 }
-.chat-messages .message:first-child { 
+
+.chat-messages .message:first-child {
   margin-top: 0;
 }
 
@@ -280,10 +310,12 @@ input {
   position: relative;
 }
 
-.videoPlayer, .previewVideo {
+.videoPlayer,
+.previewVideo {
   width: calc(100% + 1px);
-  height: calc(var(--editorWidth) / 1.505); 
+  height: calc(var(--editorWidth) / 1.505);
 }
+
 .previewVideo {
   display: block;
   background: #eee;
@@ -292,16 +324,19 @@ input {
 }
 
 .previewVideo .loading-indicator {
-  position:  absolute;
+  position: absolute;
   top: 10%;
   left: 43%;
 }
+
 .previewVideo.hide {
   opacity: 0;
 }
+
 .previewVideo video {
   width: 100%;
 }
+
 /* Timeline */
 
 /* The cursor */
@@ -311,20 +346,21 @@ input {
 }
 
 .videoTimelineGuide {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: var(--color2);
- opacity: 0.9;
- z-index: 3;
- display:flex;
- justify-content: center;
- align-content: center;
- flex-direction: column;
- text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color2);
+  opacity: 0.9;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  text-align: center;
 }
+
 .videoTimelineContainer:hover .videoTimelineGuide {
   display: none;
 }
@@ -344,6 +380,7 @@ input {
 .timelineCursor:hover {
   background: var(--color1);
 }
+
 .timelineCursor img {
   width: var(--s0);
 }
@@ -354,6 +391,7 @@ input {
   height: 100%;
   display: flex;
 }
+
 .videoTimelineThumb {
   height: 100%;
   flex: 1;
@@ -363,15 +401,16 @@ input {
   border-right: 1px solid black
 }
 
-.videoTimelineThumb:last-child{
+.videoTimelineThumb:last-child {
   border-right: none;
 }
 
 .videoTimelineThumb .poster {
   height: 100%;
   width: 100%;
-  overflow: hidden;  
+  overflow: hidden;
 }
+
 .videoTimelineThumb .poster img {
   height: 100%;
   width: auto;
@@ -382,7 +421,7 @@ input {
 
 
 
-.videoTimelineThumb > div {
+.videoTimelineThumb>div {
   width: 100%;
   height: 100%;
   position: relative;
@@ -399,15 +438,16 @@ input {
   font-size: var(--s-2);
 }
 
-.videoDropZone.flash, 
+.videoDropZone.flash,
 .videoDropZone.flash .caption {
   background: var(--color3);
 }
 
-.videoTimelineThumb.isHovering .poster img, 
+.videoTimelineThumb.isHovering .poster img,
 .videoDropZone.flash .poster img {
   opacity: 0.5;
 }
+
 .videoTimelineThumb.isHovering .caption {
   background: var(--color1);
 }
@@ -421,7 +461,9 @@ input {
   border: 1px solid var(--black);
   color: var(--textColor)
 }
-.button:hover , .button:focus{
+
+.button:hover,
+.button:focus {
   background: var(--color1);
 }
 
@@ -434,10 +476,11 @@ input {
 }
 
 
-.desktopFile.react-draggable  {
+.desktopFile.react-draggable {
   cursor: grab;
-  
+
 }
+
 .desktopFile.react-draggable-dragging {
   cursor: grabbing;
   pointer-events: none;
@@ -445,14 +488,21 @@ input {
 }
 
 
-.desktopFile:hover, .desktopFile.react-draggable-dragging {
+.desktopFile:hover,
+.desktopFile.react-draggable-dragging {
   width: 10%;
   max-width: 132px;
   z-index: 5;
 }
+
 .desktopFile.react-draggable-dragging {
-  z-index: 6;
+  z-index: 99;
 }
+
+.react-draggable-transparent-selection .desktopFile {
+  pointer-events: none;
+}
+
 .desktopFile img {
   width: 100%;
   box-shadow: 0px 0px 2px var(--gray);
@@ -463,6 +513,7 @@ input {
   box-shadow: 0px 0px 10px var(--color2);
   border: 1px solid var(--color2);
 }
+
 .desktopFile:hover .caption span {
   text-shadow: none;
   background: var(--color2);
@@ -473,9 +524,10 @@ input {
   position: absolute;
   z-index: 2;
 }
+
 .desktopFile video.hide {
   display: none;
-  
+
 }
 
 
@@ -493,12 +545,18 @@ input {
 
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
@@ -506,8 +564,10 @@ input {
   pointer-events: none;
 }
 
-.preview .desktopFile, .preview .videoTimeline, .preview .handle {
- pointer-events: none;
+.preview .desktopFile,
+.preview .videoTimeline,
+.preview .handle {
+  pointer-events: none;
 }
 
 .preview .app .handle .icon {
@@ -521,9 +581,11 @@ input {
 .preview .react-draggable .button {
   pointer-events: all;
 }
+
 .preview .chat-input {
   display: none;
 }
+
 .react-draggable-dragging {
   z-index: 9999;
   cursor: grabbing;
@@ -535,7 +597,7 @@ input {
 
 /* Phone portrait */
 @media only screen and (max-width: 400px) {
-	/* Mobile related CSS goes here (400px and under) */
+  /* Mobile related CSS goes here (400px and under) */
 
   #chat {
     top: 10%;
@@ -548,8 +610,9 @@ input {
     top: 60%;
     left: 10%;
   }
+
   #password {
     top: 60%;
   }
-  
+
 }
