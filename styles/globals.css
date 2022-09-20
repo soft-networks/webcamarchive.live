@@ -42,7 +42,10 @@ a {
   text-decoration: none;
 }
 
-
+#info a {
+  color: blue;
+  text-decoration: underline;
+}
 main {
   background-image: var(--bgURL);
   background-size: auto;
@@ -183,6 +186,9 @@ main {
 
 }
 
+.lightFill {
+  background: var(--lightGray);
+}
 #loader {
   top: 50%;
   left: 50%;
@@ -564,7 +570,9 @@ input {
   pointer-events: none;
 }
 
-.preview .desktopFile,
+.preview .desktopFile {
+  cursor: unset;
+}
 .preview .videoTimeline,
 .preview .handle {
   pointer-events: none;
